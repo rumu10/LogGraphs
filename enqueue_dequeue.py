@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = 'Q2_NJ_MA.csv'  # Update with your file path
+file_path = 'Q10_NJ_SRA.csv'  # Update with your file path
 data = pd.read_csv(file_path)
 
 # Assign appropriate column names
@@ -28,7 +28,7 @@ fig, axs = plt.subplots(4, 1, figsize=(10, 10), sharex=True)
 
 # 1. Enqueue timer vs Enqueue interval (in nanoseconds)
 axs[0].plot(data['timer'], data['enqueue_interval'], 'b')
-axs[0].set_ylabel('Frame Time[ns]')
+axs[0].set_ylabel('Frame Time[ms]')
 axs[0].set_title('Enqueue', pad=0)
 axs[0].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
 axs[0].yaxis.get_major_formatter().set_scientific(False)
@@ -43,7 +43,7 @@ axs[1].grid(True)
 
 # 2. Dequeue timer vs Dequeue interval (in nanoseconds)
 axs[2].plot(data['deque_timer'], data['dequeue_interval'], 'r')
-axs[2].set_ylabel('Frame Time[ns]')
+axs[2].set_ylabel('Frame Time[ms]')
 axs[2].set_title('Dequeue')
 axs[2].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
 axs[2].yaxis.get_major_formatter().set_scientific(False)
@@ -77,7 +77,8 @@ axs[3].grid(True)
 
 # Set the x-axis limits for all subplots
 for ax in axs:
-    ax.set_xlim([0, 5])
+    ax.set_xlim([10,15 ])
+    #ax.set_xlim(auto='true')
 
 # Adjust spacing between subplots
 plt.subplots_adjust(hspace=0.4)  # Increase the height spacing between subplots

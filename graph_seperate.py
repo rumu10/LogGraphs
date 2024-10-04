@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = 'Q2_NJ_MA.csv'  # Update with your file path
+file_path = 'Q2_NJ_RA.csv'  # Update with your file path
 data = pd.read_csv(file_path)
 
 # Assign appropriate column names
