@@ -1,92 +1,48 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+import numpy as np
 
-# Load the CSV file
-file_path = 'Q10_NJ_SRA.csv'  # Update with your file path
-data = pd.read_csv(file_path)
+# Load the CSV data
+df = pd.read_csv('eqdq2.csv')
 
-# Assign appropriate column names
-data.columns = ['timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-                'frames_in_queue', 'moving_avg', 'running_avg_5', 'queue_size(D)']
+# Clean the column names (remove spaces)
+df.columns = df.columns.str.strip()
 
-# Convert string columns to numeric (if applicable)
-data['timer'] = pd.to_numeric(data['timer'], errors='coerce')
-data['enqueue_interval'] = pd.to_numeric(data['enqueue_interval'], errors='coerce')
-data['deque_timer'] = pd.to_numeric(data['deque_timer'], errors='coerce')
-data['dequeue_interval'] = pd.to_numeric(data['dequeue_interval'], errors='coerce')
-data['frames_in_queue'] = pd.to_numeric(data['frames_in_queue'], errors='coerce')
-data['moving_avg'] = pd.to_numeric(data['moving_avg'], errors='coerce')
-data['running_avg_5'] = pd.to_numeric(data['running_avg_5'], errors='coerce')
-data['queue_size(D)'] = pd.to_numeric(data['queue_size(D)'], errors='coerce')
+# Strip leading/trailing spaces in the 'Status' column and convert to integers
+df['Status'] = df['Status'].str.strip().map({'False': 0, 'True': 1})
 
-# Drop any rows with missing values after conversion
-data.dropna(inplace=True)
+# Convert the Time from nanoseconds to milliseconds
+df['Time'] = df['Time'] / 1e6  # Convert to milliseconds
 
-# Create subplots
-fig, axs = plt.subplots(4, 1, figsize=(10, 10), sharex=True)
+# Detect the densest region in time
+time_counts = df['Time'].value_counts().sort_index()
+densest_start_time = time_counts.idxmax()
+time_window = 16.6667  # Focus on a 50ms window around the densest point
 
-# 1. Enqueue timer vs Enqueue interval (in nanoseconds)
-axs[0].plot(data['timer'], data['enqueue_interval'], 'b')
-axs[0].set_ylabel('Frame Time[ms]')
-axs[0].set_title('Enqueue', pad=0)
-axs[0].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-axs[0].yaxis.get_major_formatter().set_scientific(False)
-axs[0].grid(True)
+# Automatically zoom to the densest region
+start_time = densest_start_time - time_window / 2
+end_time = densest_start_time + time_window / 2
 
-# 3. Frames in Queue vs Enqueue timer
-axs[1].plot(data['timer'], data['frames_in_queue'], 'g')
-axs[1].set_ylabel('Frames')
-axs[1].set_title('Queue Size(Enqueue)')
-axs[1].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-axs[1].grid(True)
+# Filter the data within the automatically chosen time window
+zoom_df = df[(df['Time'] >= start_time) & (df['Time'] <= end_time)]
 
-# 2. Dequeue timer vs Dequeue interval (in nanoseconds)
-axs[2].plot(data['deque_timer'], data['dequeue_interval'], 'r')
-axs[2].set_ylabel('Frame Time[ms]')
-axs[2].set_title('Dequeue')
-axs[2].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-axs[2].yaxis.get_major_formatter().set_scientific(False)
-axs[2].grid(True)
+# Separate Enqueue and Dequeue events in the filtered data
+enqueue_df = zoom_df[zoom_df['Status'] == 0]
+dequeue_df = zoom_df[zoom_df['Status'] == 1]
 
-# 6. queue size while deque
-axs[3].plot(data['deque_timer'], data['queue_size(D)'], 'b')
-axs[3].set_ylabel('Frames')
-axs[3].set_xlabel('Time[seconds]')
-axs[3].set_title('Queue Size(Dequeue)')
-axs[3].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-axs[3].grid(True)
+# Plot Enqueue (Status = 0)
+plt.scatter(enqueue_df['Time'], [0] * len(enqueue_df), color='blue', label='Enqueue', marker='o')
 
+# Plot Dequeue (Status = 1)
+plt.scatter(dequeue_df['Time'], [1] * len(dequeue_df), color='red', label='Dequeue', marker='o')
 
+# Add titles and labels
+plt.title('Queue Operations Over Time (Auto Zoom)')
+plt.xlabel('Time (milliseconds)')
+plt.yticks([0, 1], ['Enqueue', 'Dequeue'])
 
-# 4. Moving Average vs Enqueue timer
-#axs[4].plot(data['timer'], data['moving_avg'], 'm')
-#axs[4].set_ylabel('Moving Average(ns)')
-#axs[4].set_title('Moving Average')
-#axs[4].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-#axs[4].grid(True)
+# Show the legend
+plt.legend()
 
-# 5. Running Average (Window Size 5) vs Enqueue Timer
-#axs[5].plot(data['timer'], data['running_avg_5'], 'c')
-#axs[5].set_xlabel('Time[seconds]')
-#axs[5].set_ylabel('Running Avg (Window 5)')
-#axs[5].set_title('Running Average(Window 5)')
-#axs[5].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-#axs[5].grid(True)
-
-
-# Set the x-axis limits for all subplots
-for ax in axs:
-    ax.set_xlim([10,15 ])
-    #ax.set_xlim(auto='true')
-
-# Adjust spacing between subplots
-plt.subplots_adjust(hspace=0.4)  # Increase the height spacing between subplots
-
-plt.tight_layout()
-
-# Save the figure as one image file
-#plt.savefig('combined_subplots.png')
-
-# Show the figure with all subplots
+# Display the plot
 plt.show()
