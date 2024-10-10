@@ -5,7 +5,7 @@ import numpy as np
 import os
 
 # Load the CSV file (replace with the actual file path on your system)
-file_path = 'eqdq2_test.csv'
+file_path = './data/10_1/eqdq.csv'
 data = pd.read_csv(file_path)
 
 # Strip any leading/trailing whitespace from the column names
@@ -57,7 +57,7 @@ print(f'Full dataset plot saved as {full_plot_path}')
 plt.show()
 
 # Now create multiple subplots, zoomed in to show around 30 sets of data
-chunk_size = 30
+chunk_size = 60
 num_chunks = int(np.ceil(len(time) / chunk_size))  # Determine the number of subplots needed
 
 # Create subplots
