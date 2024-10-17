@@ -3,12 +3,16 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = './data/10_16/Q10_J40_SRA.csv'  # Update with your actual file path
+file_path = './data/10_16/Q10_J40_SRA_ND.csv'  # Update with your actual file path
 data = pd.read_csv(file_path)
+
+data = data.loc[:, ~data.columns.str.contains('^Unnamed')]
+
+print(data)
 
 # Assign appropriate column names
 data.columns = ['timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-                'frames_in_queue', 'moving_avg', 'running_avg_5', 'queue_size(D)']
+                'frames_in_queue', 'running_avg_5', 'queue_size(D)']
 
 # Convert string columns to numeric (if applicable)
 for col in data.columns:
@@ -44,7 +48,7 @@ subplots_to_include.append({
     'x': data['deque_timer'],
     'y': data['dequeue_interval'],
     'ylabel': 'Frame Time [ms]',
-    'color': 'r'
+    'color': '#1E90FF'
 })
 
 # Uncomment to add Queue Size during Dequeue subplot
@@ -66,14 +70,7 @@ subplots_to_include.append({
 #     'color': 'c'
 # })
 
-# Moving Average vs Enqueue Timer subplot
-# subplots_to_include.append({
-#     'title': 'Moving Average vs Enqueue Timer',
-#     'x': data['timer'],
-#     'y': data['moving_avg'],
-#     'ylabel': 'Moving Average',
-#     'color': 'm'
-# })
+
 
 # Create subplots including the combined queue size plot
 fig, axs = plt.subplots(len(subplots_to_include) + 1, 1,
@@ -97,12 +94,17 @@ combined_ax.plot(data['deque_timer'], data['queue_size(D)'], label='Queue Size (
 # Set title and labels for the combined plot
 combined_ax.set_title('Queue Sizes: Enqueue vs Dequeue', pad=10)
 combined_ax.set_ylabel('Frames')
-combined_ax.legend(loc='upper right')
+combined_ax.legend(loc='lower left')
 combined_ax.grid(True)
 
 # Use scalar formatter to avoid scientific notation
 combined_ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
 combined_ax.yaxis.get_major_formatter().set_scientific(False)
+
+# Apply x-axis limits to all subplots
+x_min, x_max = 0, 20
+for ax in axs:
+    ax.set_xlim([x_min, x_max])
 
 # Set x-axis label only on the last subplot
 axs[-1].set_xlabel('Time [seconds]')
