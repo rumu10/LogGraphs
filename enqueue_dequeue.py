@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = './data/10_16/Q10_J40_SRA.csv'  # Update with your actual file path
+file_path = './data/10_22/Q10_J40/J1.csv'  # Update with your actual file path
 data = pd.read_csv(file_path)
+
+print(data)
 
 # Assign appropriate column names
 data.columns = ['timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
