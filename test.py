@@ -1,120 +1,43 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 
-# Load the CSV file
-file_path = './data/10_22/Q10_J40/J1.csv'  # Update with your actual file path
-data = pd.read_csv(file_path)
+# Load the uploaded CSV file
+file_path = "./data/test.csv"
+df = pd.read_csv(file_path, header=None, names=['A', 'B', 'C', 'D', 'E'])
 
-print(data)
+# Create 3 subplots: (1) Expected vs Actual Interval, (2) Difference, (3) Update Loop Interval
+fig, axs = plt.subplots(3, 1, figsize=(10, 9), sharex=True)
 
-# Assign appropriate column names
-data.columns = ['timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-                'frames_in_queue', 'moving_avg', 'running_avg_5', 'queue_size(D)']
+# Subplot 1: Expected vs Actual Interval
+axs[0].plot(df['C'], df['A'], 'b-', label='Expected Interval')
+axs[0].plot(df['C'], df['D'], 'r-', label='Actual Interval')
+axs[0].set_title('Expected vs Actual Interval')
+axs[0].set_ylabel('Interval [ms]')
+axs[0].legend(loc='upper right')
+axs[0].grid(True)
 
-# Convert string columns to numeric (if applicable)
-for col in data.columns:
-    data[col] = pd.to_numeric(data[col], errors='coerce')
+# Subplot 2: Difference between Expected and Actual Interval
+axs[1].plot(df['C'], df['E'], 'g-')
+axs[1].set_title('Difference (Expected - Actual Interval)')
+axs[1].set_ylabel('Difference [ms]')
+axs[1].grid(True)
 
-# Drop any rows with missing values after conversion
-data.dropna(inplace=True)
+# Subplot 3: Update Loop Interval
+axs[2].plot(df['C'], df['B'], 'c-')
+axs[2].set_title('Update Loop Interval')
+axs[2].set_xlabel('Time [seconds]')
+axs[2].set_ylabel('Interval [ms]')
+axs[2].grid(True)
 
-# Define the subplots you want to include
-subplots_to_include = []
+# Apply correct x-axis limits based on actual data
+x_min = 11.8  # Start at 0 seconds
+x_max = 11.9  # End at the maximum value in the 'C' column (e.g., 7 seconds)
 
-# Enqueue subplot
-subplots_to_include.append({
-    'title': 'Enqueue',
-    'x': data['timer'],
-    'y': data['enqueue_interval'],
-    'ylabel': 'Frame Time [ms]',
-    'color': 'b'
-})
+for ax in axs:
+    ax.set_xlim(x_min, x_max)  # Set the same x-axis limits for all subplots
 
-# Uncomment to add Queue Size during Enqueue subplot
-# subplots_to_include.append({
-#     'title': 'Queue Size (Enqueue)',
-#     'x': data['timer'],
-#     'y': data['frames_in_queue'],
-#     'ylabel': 'Frames',
-#     'color': 'g'
-# })
-
-# Dequeue subplot
-subplots_to_include.append({
-    'title': 'Dequeue',
-    'x': data['deque_timer'],
-    'y': data['dequeue_interval'],
-    'ylabel': 'Frame Time [ms]',
-    'color': 'r'
-})
-
-# Uncomment to add Queue Size during Dequeue subplot
-# subplots_to_include.append({
-#     'title': 'Queue Size (Dequeue)',
-#     'x': data['deque_timer'],
-#     'y': data['queue_size(D)'],
-#     'ylabel': 'Frames',
-#     'color': 'b'
-# })
-
-# Running Average subplot
-# subplots_to_include.append({
-#     'title': 'Running Average vs Enqueue Timer',
-#     'x': data['timer'],
-#     'y': data['running_avg_5'],
-#     'ylabel': 'Running Avg',
-#     'xlabel': 'Time [seconds]',
-#     'color': 'c'
-# })
-
-# Moving Average vs Enqueue Timer subplot
-# subplots_to_include.append({
-#     'title': 'Moving Average vs Enqueue Timer',
-#     'x': data['timer'],
-#     'y': data['moving_avg'],
-#     'ylabel': 'Moving Average',
-#     'color': 'm'
-# })
-
-# Create subplots including the combined queue size plot
-fig, axs = plt.subplots(len(subplots_to_include) + 1, 1,
-                        figsize=(10, (len(subplots_to_include) + 1) * 3),
-                        sharex=True)
-
-# Loop through each subplot data and plot dynamically
-for i, subplot in enumerate(subplots_to_include):
-    axs[i].plot(subplot['x'], subplot['y'], subplot['color'])
-    axs[i].set_ylabel(subplot['ylabel'])
-    axs[i].set_title(subplot['title'], pad=10)
-    axs[i].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-    axs[i].yaxis.get_major_formatter().set_scientific(False)
-    axs[i].grid(True)
-
-# Combined queue size subplot
-combined_ax = axs[-1]
-combined_ax.plot(data['timer'], data['frames_in_queue'], label='Queue Size (Enqueue)', color='g')
-combined_ax.plot(data['deque_timer'], data['queue_size(D)'], label='Queue Size (Dequeue)', color='r')
-
-# Set title and labels for the combined plot
-combined_ax.set_title('Queue Sizes: Enqueue vs Dequeue', pad=10)
-combined_ax.set_ylabel('Frames')
-combined_ax.legend(loc='upper right')
-combined_ax.grid(True)
-
-# Use scalar formatter to avoid scientific notation
-combined_ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-combined_ax.yaxis.get_major_formatter().set_scientific(False)
-
-# Set x-axis label only on the last subplot
-axs[-1].set_xlabel('Time [seconds]')
-
-# Adjust layout
-plt.subplots_adjust(hspace=0.4)  # Increase spacing between subplots
+# Adjust layout to avoid overlap
 plt.tight_layout()
 
-# Save the figure
-plt.savefig('combined_subplots_with_queue_sizes.png')
-
-# Show the figure
+# Show the plot
 plt.show()
