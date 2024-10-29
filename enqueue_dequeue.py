@@ -5,7 +5,7 @@ import matplotlib.ticker as ticker
 # Load the CSV file
 #file_path = "./data/10_22/Q10_J40/J3.csv"  # Update with your actual file path
 
-file_path = "./data/10_16/Q10_J40_WRA600_D.csv"  # Update with your actual file path
+file_path = "./data/10_29/Q10_J40/J1.csv"  # Update with your actual file path
 raw_data = pd.read_csv(file_path, header=None)
 
 # Drop column 5 (mostly NaN) and clean the dataset
@@ -49,6 +49,10 @@ for i, subplot in enumerate(subplots_to_include):
     axs[i].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
     axs[i].yaxis.get_major_formatter().set_scientific(False)
     axs[i].grid(True)
+
+    # Set x-axis limit for this subplot
+    axs[i].set_xlim([5, 15])
+    #axs[i].set_xlim(auto= 'true')
 
 # Combined Queue Size plot
 combined_ax = axs[-1]
