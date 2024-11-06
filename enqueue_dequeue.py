@@ -3,19 +3,17 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-#file_path = "./data/10_22/Q10_J40/J3.csv"  # Update with your actual file path
-
-file_path = "./data/10_29/Q10_J40/J2.csv"  # Update with your actual file path
+file_path = "./data/11_6/Q10/J_sleep.csv"  # Update with your actual file path
 raw_data = pd.read_csv(file_path, header=None)
 
 # Drop column 5 (mostly NaN) and clean the dataset
-cleaned_data = raw_data.drop(columns=[5])
-cleaned_data.dropna(subset=[0, 1, 2, 3], inplace=True)
+cleaned_data = raw_data.dropna(subset=[0, 1, 2, 3], inplace=False)
 
-# Assign proper column names
+# Assign proper column names, including the new columns
 cleaned_data.columns = [
     'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-    'frames_in_queue', 'running_avg_5', 'queue_size(D)'
+    'frames_in_queue', 'running_avg_5', 'queue_size(D)',
+    'time_taken_update', 'expected_sleep', 'sleep_difference', 'start_time_interval'
 ]
 
 # Define the subplots to include based on cleaned data
@@ -33,6 +31,34 @@ subplots_to_include = [
         'y': cleaned_data['dequeue_interval'],
         'ylabel': 'Frame Time [ms]',
         'color': 'r'
+    },
+    {
+        'title': 'Time Taken to Execute Update',
+        'x': cleaned_data['timer'],
+        'y': cleaned_data['time_taken_update'],
+        'ylabel': 'Time [ms]',
+        'color': 'purple'
+    },
+    # {
+    #     'title': 'Expected Sleep Time',
+    #     'x': cleaned_data['timer'],
+    #     'y': cleaned_data['expected_sleep'],
+    #     'ylabel': 'Time [ms]',
+    #     'color': 'orange'
+    # },
+    {
+        'title': 'Sleep Difference (Real - Expected)',
+        'x': cleaned_data['timer'],
+        'y': cleaned_data['sleep_difference'],
+        'ylabel': 'Time [ms]',
+        'color': 'brown'
+    },
+    {
+        'title': 'Start Time Interval',
+        'x': cleaned_data['timer'],
+        'y': cleaned_data['start_time_interval'],
+        'ylabel': 'Time Interval [ms]',
+        'color': 'cyan'
     }
 ]
 
@@ -43,7 +69,7 @@ fig, axs = plt.subplots(len(subplots_to_include) + 1, 1,
 
 # Plot each subplot dynamically
 for i, subplot in enumerate(subplots_to_include):
-    axs[i].plot(subplot['x'], subplot['y'], subplot['color'])
+    axs[i].plot(subplot['x'], subplot['y'], color=subplot['color'])
     axs[i].set_ylabel(subplot['ylabel'])
     axs[i].set_title(subplot['title'], pad=10)
     axs[i].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
@@ -51,8 +77,7 @@ for i, subplot in enumerate(subplots_to_include):
     axs[i].grid(True)
 
     # Set x-axis limit for this subplot
-    axs[i].set_xlim([3, 15])
-    #axs[i].set_xlim(auto= 'true')
+    axs[i].set_xlim([2, 20])
 
 # Combined Queue Size plot
 combined_ax = axs[-1]
@@ -77,9 +102,6 @@ axs[-1].set_xlabel('Time [seconds]')
 # Adjust layout
 plt.subplots_adjust(hspace=0.4)  # Increase spacing between subplots
 plt.tight_layout()
-
-# Save the figure
-#plt.savefig('combined_subplots_with_queue_sizes.png')
 
 # Show the plot
 plt.show()
