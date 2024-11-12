@@ -45,6 +45,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\data\11_11\Q10J40\jitter_values_20241111_173255.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\data\11_6\Q10\J_sleep.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\data\test1.csv">
           <value>
             <Attribute>

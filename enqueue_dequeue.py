@@ -3,17 +3,16 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = "./data/11_6/Q10/J_sleep.csv"  # Update with your actual file path
+file_path = "./data/11_11/Q10J100/jitter_values_20241111_232317.csv"  # Update with your actual file path
 raw_data = pd.read_csv(file_path, header=None)
 
-# Drop column 5 (mostly NaN) and clean the dataset
-cleaned_data = raw_data.dropna(subset=[0, 1, 2, 3], inplace=False)
+# Drop rows that contain any blank (NaN) values
+cleaned_data = raw_data.dropna(how='any').copy()
 
 # Assign proper column names, including the new columns
 cleaned_data.columns = [
     'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-    'frames_in_queue', 'running_avg_5', 'queue_size(D)',
-    'time_taken_update', 'expected_sleep', 'sleep_difference', 'start_time_interval'
+    'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference'
 ]
 
 # Define the subplots to include based on cleaned data
@@ -32,34 +31,27 @@ subplots_to_include = [
         'ylabel': 'Frame Time [ms]',
         'color': 'r'
     },
-    {
-        'title': 'Time Taken to Execute Update',
-        'x': cleaned_data['timer'],
-        'y': cleaned_data['time_taken_update'],
-        'ylabel': 'Time [ms]',
-        'color': 'purple'
-    },
     # {
-    #     'title': 'Expected Sleep Time',
+    #     'title': 'Time Taken to Execute Update',
     #     'x': cleaned_data['timer'],
-    #     'y': cleaned_data['expected_sleep'],
+    #     'y': cleaned_data['time_taken_update'],
     #     'ylabel': 'Time [ms]',
-    #     'color': 'orange'
+    #     'color': 'purple'
     # },
-    {
-        'title': 'Sleep Difference (Real - Expected)',
-        'x': cleaned_data['timer'],
-        'y': cleaned_data['sleep_difference'],
-        'ylabel': 'Time [ms]',
-        'color': 'brown'
-    },
-    {
-        'title': 'Start Time Interval',
-        'x': cleaned_data['timer'],
-        'y': cleaned_data['start_time_interval'],
-        'ylabel': 'Time Interval [ms]',
-        'color': 'cyan'
-    }
+    # {
+    #     'title': 'Sleep Difference (Real - Expected)',
+    #     'x': cleaned_data['timer'],
+    #     'y': cleaned_data['sleep_difference'],
+    #     'ylabel': 'Time [ms]',
+    #     'color': 'brown'
+    # },
+    # {
+    #     'title': 'Start Time Interval',
+    #     'x': cleaned_data['timer'],
+    #     'y': cleaned_data['start_time_interval'],
+    #     'ylabel': 'Time Interval [ms]',
+    #     'color': 'cyan'
+    # }
 ]
 
 # Create subplots
@@ -77,7 +69,7 @@ for i, subplot in enumerate(subplots_to_include):
     axs[i].grid(True)
 
     # Set x-axis limit for this subplot
-    axs[i].set_xlim([2, 20])
+    axs[i].set_xlim([2, 60])
 
 # Combined Queue Size plot
 combined_ax = axs[-1]
