@@ -3,22 +3,22 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = 'Q2_NJ_RA.csv'  # Update with your file path
+file_path = './data/server/log_20241113T220727405Z.csv'  # Update with your file path
 data = pd.read_csv(file_path)
 
 # Assign appropriate column names
-data.columns = ['timer', 'interval']
+data.columns = ['interval','timer']
 
 # Convert string columns to numeric (if applicable)
 data['timer'] = pd.to_numeric(data['timer'], errors='coerce')
-data['interval'] = pd.to_numeric(data['enqueue_interval'], errors='coerce')
+data['interval'] = pd.to_numeric(data['interval'], errors='coerce')
 
 # Drop any rows with missing values after conversion
 data.dropna(inplace=True)
 
 
 # Function to plot and save the graphs without scientific notation
-def plot_and_save_graph(x, y, xlabel, ylabel, title, color, filename, xlim=(0, 5)):
+def plot_and_save_graph(x, y, xlabel, ylabel, title, color, filename, xlim=(2, 60)):
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, label=ylabel, color=color)
     plt.xlim(xlim)
