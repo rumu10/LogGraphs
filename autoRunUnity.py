@@ -7,7 +7,7 @@ import pyautogui
 unity_path = r"C:\Users\claypool-316\Desktop\Rumu\Build\UnityClient.exe"
 
 # Number of times to run UnityClient.exe
-run_count = 20  # Set your desired number of runs
+run_count = 3  # Set your desired number of runs
 
 for i in range(run_count):
     print(f"Starting UnityClient.exe (Run {i+1}/{run_count})")
@@ -16,7 +16,7 @@ for i in range(run_count):
     process = subprocess.Popen(unity_path)
 
     # Wait for 1 minute (60 seconds)
-    time.sleep(62)
+    time.sleep(30)
 
     # Try to close UnityClient.exe using Alt+F4, which acts as a natural close request
     for proc in psutil.process_iter(['pid', 'name']):

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = "./data/11_11/Q2_NJ/jitter_values_20241112_103120.csv"  # Update with your actual file path
+file_path = "./data/11_19/"  # Update with your actual file path
 raw_data = pd.read_csv(file_path, header=None)
 
 # Drop rows that contain any blank (NaN) values
@@ -69,7 +69,7 @@ for i, subplot in enumerate(subplots_to_include):
     axs[i].grid(True)
 
     # Set x-axis limit for this subplot
-    axs[i].set_xlim([2, 60])
+    axs[i].set_xlim([2, 30])
 
 # Combined Queue Size plot
 combined_ax = axs[-1]
