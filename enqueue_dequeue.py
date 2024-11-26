@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Load the CSV file
-file_path = "./data/11_11/Q2_J100/jitter_values_20241112_114403.csv"   # Update with your actual file path
+file_path = "./data/11-22/jitter_values_20241122_170821.csv"   # Update with your actual file path
 raw_data = pd.read_csv(file_path, header=None)
 
 # Drop rows that contain any blank (NaN) values

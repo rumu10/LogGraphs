@@ -4,7 +4,7 @@ import matplotlib.ticker as ticker
 import os
 
 # Specify the folder path containing the CSV files
-folder_path = "./data/11_11/Q2_J4"  # Update with your folder path
+folder_path = "./data/11-26"  # Update with your folder path
 
 # Iterate through all CSV files in the specified folder
 for filename in os.listdir(folder_path):
@@ -16,6 +16,11 @@ for filename in os.listdir(folder_path):
 
         # Drop rows that contain any blank (NaN) values
         cleaned_data = raw_data.dropna(how='any').copy()
+
+        # Save the cleaned data back to the file
+        cleaned_file_path = file_path.replace(".csv", "_cleaned.csv")  # Save cleaned file
+        cleaned_data.to_csv(cleaned_file_path, header=False, index=False)
+        print(f"Cleaned file saved as {cleaned_file_path}")
 
         # Assign proper column names
         cleaned_data.columns = [
