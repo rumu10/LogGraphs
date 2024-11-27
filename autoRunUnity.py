@@ -8,7 +8,7 @@ import pyautogui
 unity_path = r"C:\Users\claypool-316\Desktop\Rumu\Build\UnityClient.exe"
 
 # Number of times to run UnityClient.exe
-run_count = 6  # Set your desired number of runs
+run_count = 20  # Set your desired number of runs
 run_duration = 30
 
 for i in range(run_count):
