@@ -3,17 +3,20 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import os
 
+
 def calculate_average_queue_size(data, column='queue_size(D)'):
     """
     Calculate the average queue size for the specified column.
     """
     return data[column].mean()
 
+
 def count_interrupts(data, column='dequeue_interval', threshold=33.333334):
     """
     Count the number of interrupts in the specified column based on the given threshold.
     """
     return (data[column] > threshold).sum()
+
 
 def process_csv(file_path, output_folder):
     """
@@ -72,7 +75,9 @@ def process_csv(file_path, output_folder):
         axs[i].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
         axs[i].yaxis.get_major_formatter().set_scientific(False)
         axs[i].grid(True)
-        axs[i].set_xlim([2, 60])
+        axs[i].set_xlim([4, 30])
+        # Synchronize y-axis across all plots
+        axs[i].set_ylim([0, 60])
 
     # Combined Queue Size plot
     combined_ax = axs[-1]
@@ -108,34 +113,40 @@ def process_csv(file_path, output_folder):
     # Return calculated metrics
     return average_queue_size, interrupt_count
 
-# Specify the folder path containing the CSV files
-folder_path = "./data/11-26/test2"  # Update with your folder path
 
-# Create a summary list to hold results
-summary_data = []
+# Main processing script
+def main(folder_path):
+    # Create a summary list to hold results
+    summary_data = []
 
-# Create a new folder for each iteration
-for run_idx, filename in enumerate(os.listdir(folder_path), start=1):
-    if filename.endswith(".csv"):
-        file_path = os.path.join(folder_path, filename)
+    # Create a new folder for each iteration
+    for run_idx, filename in enumerate(os.listdir(folder_path), start=1):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(folder_path, filename)
 
-        # Create an output folder for the current run
-        run_folder = os.path.join(folder_path, f"iteration_{run_idx}")
-        os.makedirs(run_folder, exist_ok=True)
+            # Create an output folder for the current run
+            run_folder = os.path.join(folder_path, f"iteration_{run_idx}")
+            os.makedirs(run_folder, exist_ok=True)
 
-        # Process the CSV file and save results in the run folder
-        avg_queue_size, interrupt_count = process_csv(file_path, run_folder)
+            # Process the CSV file and save results in the run folder
+            avg_queue_size, interrupt_count = process_csv(file_path, run_folder)
 
-        # Store the results in the summary list
-        summary_data.append({
-            "Iteration": run_idx,
-            "File": filename,
-            "Average Queue Size (Dequeue)": avg_queue_size,
-            "Interrupt Count (Dequeue Rate)": interrupt_count
-        })
+            # Store the results in the summary list
+            summary_data.append({
+                "Iteration": run_idx,
+                "File": filename,
+                "Average Queue Size (Dequeue)": avg_queue_size,
+                "Interrupt Count (Dequeue Rate)": interrupt_count
+            })
 
-# Save the summary data to a CSV file
-summary_file_path = os.path.join(folder_path, "summary.csv")
-summary_df = pd.DataFrame(summary_data)
-summary_df.to_csv(summary_file_path, index=False)
-print(f"Summary file saved as {summary_file_path}")
+    # Save the summary data to a CSV file
+    summary_file_path = os.path.join(folder_path, "summary.csv")
+    summary_df = pd.DataFrame(summary_data)
+    summary_df.to_csv(summary_file_path, index=False)
+    print(f"Summary file saved as {summary_file_path}")
+
+
+# Run the script
+if __name__ == "__main__":
+    folder_path = "./data/11-29/JitterFirst"  # Update with your folder path
+    main(folder_path)
