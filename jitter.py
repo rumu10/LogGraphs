@@ -20,6 +20,9 @@ if len(sys.argv) < 2:
     print("Usage: python jitter.py <jitter_value>")
     sys.exit(1)
 
+jitter_value = int(sys.argv[1])
+print(f"Running jitter with value: {jitter_value}")
+
 jitter_value = sys.argv[1]  # Get the jitter value (e.g., 20ms)
 
 ssh = paramiko.SSHClient()

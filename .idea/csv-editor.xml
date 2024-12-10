@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="C:\Users\claypool-316\Desktop\Rumu\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\data\10_29\Q2_J40\J.csv">
           <value>
             <Attribute>
@@ -60,6 +67,13 @@
           </value>
         </entry>
         <entry key="\data\11_6\Q10\J_sleep.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\data\2024-12-09_18-00-46\script_summary.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

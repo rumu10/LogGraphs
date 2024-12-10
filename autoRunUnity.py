@@ -9,8 +9,8 @@ python_path = r"C:\Users\claypool-316\Desktop\Rumu\pythonProject\.venv\Scripts\p
 restart_script = "restart_server.py"
 
 # Number of times to run UnityClient.exe
-run_count = 50
-run_duration = 30
+run_count = 5
+run_duration = 5
 
 for i in range(run_count):
     print(f"Starting UnityClient.exe (Run {i+1}/{run_count})")
