@@ -25,19 +25,28 @@ os.makedirs(batch_directory, exist_ok=True)
 print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
-run_count = 50
+run_count = 20
 run_unity= 60
 
 # Configuration for splitting runs
 configs = [
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": 1},
     # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": 1},
-    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": 20},
-    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": 20},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": 20},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": 20},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": 20},
-    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": 20},
+    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count},
+    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count},
+    {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count},
+    {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count},
+    {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count},
+    {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count},
+    {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count},
+    {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count},
+    {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count},
+    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count},
+    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count},
+    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count},
 ]
 
 log_file_path = os.path.join(batch_directory, "script_summary.csv")
