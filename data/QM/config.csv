@@ -1,5 +1,5 @@
 param,value
-bufferSize,2
+bufferSize,0
 timeToWait,2
 roundDuration,300
 jitterValue,20
