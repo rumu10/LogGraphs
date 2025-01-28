@@ -1,0 +1,7 @@
+param,value
+bufferSize,0
+timeToWait,2
+roundDuration,300
+jitterValue,20
+algo,2
+display,0

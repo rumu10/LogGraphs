@@ -180,10 +180,12 @@ def count_interrupts(data, column='dequeue_interval', threshold=33.333334):
 
 def calculate_interrupt_magnitude(data, column='dequeue_interval', threshold=33.333334):
     """
-    Calculate the total magnitude of interrupts, defined as the sum of values exceeding the threshold.
+    Get the magnitudes of interrupts as a comma-separated string.
+    Each interrupt magnitude is the value exceeding the threshold.
     """
     interrupt_values = data[column][data[column] > threshold]
-    return interrupt_values.sum()
+    return ", ".join(map(str, interrupt_values))
+
 
 
 def process_csv(file_path, output_folder):
@@ -205,7 +207,7 @@ def process_csv(file_path, output_folder):
     # Assign proper column names
     cleaned_data.columns = [
         'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference'
+        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference','display_latency','gap'
     ]
 
     # Calculate metrics using the modular functions
@@ -245,8 +247,10 @@ def process_csv(file_path, output_folder):
         axs[i].yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
         axs[i].yaxis.get_major_formatter().set_scientific(False)
         axs[i].grid(True)
-        axs[i].set_xlim([4, 30])
-        axs[i].set_ylim([0, 60])  # Synchronize y-axis across all plots
+        axs[i].set_xlim(cleaned_data['timer'].min(), cleaned_data['timer'].max())
+        axs[i].set_ylim(cleaned_data['enqueue_interval'].min(), cleaned_data['enqueue_interval'].max())
+
+        # Synchronize y-axis across all plots
 
     # Combined Queue Size plot
     combined_ax = axs[-1]
@@ -258,15 +262,22 @@ def process_csv(file_path, output_folder):
     # Set title and labels for the combined plot
     combined_ax.set_title('Queue Sizes: Enqueue vs Dequeue', pad=10)
     combined_ax.set_ylabel('Frames')
-    combined_ax.legend(loc='lower right')
+    # combined_ax.legend(loc='lower right')
     combined_ax.grid(True)
 
-    # Annotate the average queue size and interrupt count on the plot
-    combined_ax.text(0.95, 0.95,
-                     f"Avg Queue Size: {average_queue_size:.2f}\nInterrupts: {interrupt_count}\nInterrupt Mag: {interrupt_magnitude:.2f}\nStd Dev: {std_queue_size:.2f}",
-                     transform=combined_ax.transAxes, fontsize=10,
-                     verticalalignment='top', horizontalalignment='right',
-                     bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5))
+    combined_ax.text(
+        0.95,
+        0.95,
+        f"Avg Queue Size: {average_queue_size:.2f}\n"
+        f"Interrupts: {interrupt_count}\n"
+        f"Interrupt Mag: {interrupt_magnitude}\n"  # Remove .2f for the string
+        f"Std Dev: {std_queue_size:.2f}",
+        transform=combined_ax.transAxes,
+        fontsize=10,
+        verticalalignment='bottom',
+        horizontalalignment='right',
+        bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5)
+    )
 
     # Adjust layout
     plt.subplots_adjust(hspace=0.4)
@@ -285,8 +296,10 @@ def process_csv(file_path, output_folder):
 
 
 # Main processing script
-def main(folder_path):
+def main(folder_path, run_logs_path, summary_file_path):
     # Create a summary list to hold results
+    # Load run_logs.csv
+    run_logs = pd.read_csv(run_logs_path)
     summary_data = []
 
     # Create a new folder for each iteration
@@ -301,24 +314,33 @@ def main(folder_path):
             # Process the CSV file and save results in the run folder
             avg_queue_size, std_queue_size, interrupt_count, interrupt_magnitude = process_csv(file_path, run_folder)
 
-            # Store the results in the summary list
+            # Fetch corresponding buffer size and jitter value from run_logs.csv
+            buffer_size = run_logs.loc[run_idx - 1, 'Buffer Size']
+            jitter_value = run_logs.loc[run_idx - 1, 'Jitter Magnitude']
+            policy = run_logs.loc[run_idx - 1, 'Policy']
+
+            # Append to summary
             summary_data.append({
                 "Iteration": run_idx,
                 "File": filename,
-                "Average Queue Size (Dequeue)": avg_queue_size,
+                "Buffer Size": buffer_size,
+                "Added Jitter Magnitude": jitter_value,
+                "Average Queue Size": avg_queue_size,
                 "Std Dev Queue Size": std_queue_size,
-                "Interrupt Count (Dequeue Rate)": interrupt_count,
-                "Interrupt Magnitude": interrupt_magnitude
+                "Interrupt Count": interrupt_count,
+                "Interrupts Magnitude(ms)": interrupt_magnitude,
+                "Policy": policy
             })
 
-    # Save the summary data to a CSV file
-    summary_file_path = os.path.join(folder_path, "summary.csv")
-    summary_df = pd.DataFrame(summary_data)
-    summary_df.to_csv(summary_file_path, index=False)
-    print(f"Summary file saved as {summary_file_path}")
+        # Save the summary data to a new CSV file
+        summary_df = pd.DataFrame(summary_data)
+        summary_df.to_csv(summary_file_path, index=False)
+        print(f"Summary file saved as {summary_file_path}")
 
 
 # Run the script
 if __name__ == "__main__":
-    folder_path = "./data/12-3/Task.delay"  # Update with your folder path
-    main(folder_path)
+    folder_path = "./data/2025-01-27_21-26-32/Client"  # Update with your folder path
+    run_logs_path = "./data/2025-01-27_21-26-32/script_summary.csv"  # Path to run_logs.csv
+    summary_file_path = "./data/2025-01-27_21-26-32/iteration_summary.csv"  # Path for the new summary file
+    main(folder_path, run_logs_path, summary_file_path)

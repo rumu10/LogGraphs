@@ -1,10 +1,12 @@
 import paramiko
+import time
 
-hostname = "130.215.30.198"
-username = "sudipta"  # Adjust if necessary
+hostname = "130.215.30.99"
+username = "claypool"  # Adjust if necessary
 password = "1012"  # Use an empty string if no password
-remote_script_path = "C:/Users/Sudipta/Documents/GitHub/LogGraphs/restartAndReload.py"
-python_path = "C:/Users/Sudipta/AppData/Local/Programs/Python/Python313/python.exe"  # Adjust path to Python
+remote_script_path = "C:/Users/claypool/Desktop/rumu/GitHub/LogGraphs/startAndStopServer.py"
+python_path = "C:/Users/claypool/AppData/Local/Programs/Python/Python313/python.exe"  # Adjust path to Python
+timeout = 15  # Timeout in seconds
 
 try:
     print("Connecting to the server...")
@@ -18,14 +20,33 @@ try:
     command = f'"{python_path}" {remote_script_path}'
     stdin, stdout, stderr = ssh.exec_command(command)
 
-    # Print script output
-    print("Script output:")
-    print(stdout.read().decode())
+    # Monitor the output and wait for a specific signal or timeout
+    start_time = time.time()
+    while True:
+        if stdout.channel.recv_ready():  # Check if there is any output
+            output = stdout.read().decode('utf-8', errors='replace')
+            print("Script output:")
+            # print(output)
+            if "Page reloaded." in output:  # Example: signal from Selenium
+                print("Detected successful execution. Stopping script...")
+                break
 
-    # Print script errors
-    print("Script errors:")
-    print(stderr.read().decode())
+        if time.time() - start_time > timeout:  # Timeout
+            print("Timeout reached. Stopping the script.")
+            break
 
+        time.sleep(.5)  # Avoid busy-waiting
+
+    # Print errors if any
+    if stderr.channel.recv_ready():
+        errors = stderr.read().decode('utf-8', errors='replace')
+        print("Script errors:")
+        # print(errors)
+
+    # Close the streams and SSH connection
+    stdin.close()
+    stdout.close()
+    stderr.close()
     ssh.close()
     print("Disconnected from the server.")
 except Exception as e:
