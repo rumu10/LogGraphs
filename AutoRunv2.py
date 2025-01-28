@@ -26,7 +26,7 @@ print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
 run_count = 5
-run_unity= 30
+run_unity= 60
 
 #algo 0 = E policy, 1- I-policy, 2=QM
 
@@ -39,8 +39,8 @@ configs = [
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 0},
     # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
     {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0},
     {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2},
     # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
@@ -49,9 +49,9 @@ configs = [
     # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2},
     # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
     # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2},
-    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
-    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
-    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2},
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
 ]
 
@@ -62,25 +62,25 @@ with open(log_file_path, mode='w', newline='') as file:
     writer.writerow([
         "Run Number", "Run Start Time", "Run End Time", "Jitter.py Run Duration (s)", "Unity,exe Run Duration (s)","Server Restart Duration (s)",
         "Total Script Run Duration (s)",
-        "Unity.exe Stop Duration (s)", "Buffer Size", "Jitter Magnitude"
+        "Unity.exe Stop Duration (s)", "Buffer Size", "Jitter Magnitude", "Policy"
     ])
 
 # Function to log messages to the CSV file
-def log_to_csv(run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration, stop_time, buffer_size, jitter_magnitude):
+def log_to_csv(run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration, stop_time, buffer_size, jitter_magnitude,algo):
     with open(log_file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([
             run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration,
-            stop_time, buffer_size, jitter_magnitude
+            stop_time, buffer_size, jitter_magnitude,algo
         ])
 
-def update_config_file(buffer_size, time_to_wait, round_duration, jitter_value):
+def update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo):
     """
     Update the config.csv file with the given parameters.
     """
     data = {
-        "param": ["bufferSize", "timeToWait", "roundDuration", "jitterValue"],
-        "value": [buffer_size, time_to_wait, round_duration, jitter_value],
+        "param": ["bufferSize", "timeToWait", "roundDuration", "jitterValue","algo"],
+        "value": [buffer_size, time_to_wait, round_duration, jitter_value, algo],
     }
     df = pd.DataFrame(data)
     df.to_csv(config_file, index=False)
@@ -99,12 +99,12 @@ def stop_unity_client():
                 proc.terminate()
                 print("Forcefully terminated UnityClient.exe as it was still running.")
 
-def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value):
+def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, algo):
     """
     Run a batch of Unity clients with the given parameters.
     """
     start_runbatch = time.time()
-    update_config_file(buffer_size, time_to_wait, round_duration, jitter_value)
+    update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo)
 
     for i in range(runs):
         print(f"Starting UnityClient.exe (Run {i + 1}/{runs})")
@@ -164,6 +164,7 @@ def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value):
             stop_time=round(stop_duration, 2),
             buffer_size=buffer_size,
             jitter_magnitude=jitter_value,
+            algo = algo
         )
 
         print(f"Run {i + 1}/{runs} logged successfully.")
@@ -176,5 +177,6 @@ for config in configs:
         time_to_wait=config["timeToWait"],
         round_duration=config["roundDuration"],
         jitter_value=config["jitterValue"],
+        algo=config["algo"]
     )
 print("All runs completed. Logs saved to", log_file_path)

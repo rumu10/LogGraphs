@@ -207,7 +207,7 @@ def process_csv(file_path, output_folder):
     # Assign proper column names
     cleaned_data.columns = [
         'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference'
+        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference','display_latency','gap'
     ]
 
     # Calculate metrics using the modular functions
@@ -317,6 +317,7 @@ def main(folder_path, run_logs_path, summary_file_path):
             # Fetch corresponding buffer size and jitter value from run_logs.csv
             buffer_size = run_logs.loc[run_idx - 1, 'Buffer Size']
             jitter_value = run_logs.loc[run_idx - 1, 'Jitter Magnitude']
+            policy = run_logs.loc[run_idx - 1, 'Policy']
 
             # Append to summary
             summary_data.append({
@@ -327,7 +328,8 @@ def main(folder_path, run_logs_path, summary_file_path):
                 "Average Queue Size": avg_queue_size,
                 "Std Dev Queue Size": std_queue_size,
                 "Interrupt Count": interrupt_count,
-                "Interrupts Magnitude(ms)": interrupt_magnitude
+                "Interrupts Magnitude(ms)": interrupt_magnitude,
+                "Policy": policy
             })
 
         # Save the summary data to a new CSV file
@@ -338,7 +340,7 @@ def main(folder_path, run_logs_path, summary_file_path):
 
 # Run the script
 if __name__ == "__main__":
-    folder_path = "./data/2025-01-21_21-51-35/Client"  # Update with your folder path
-    run_logs_path = "./data/2025-01-21_21-51-35/script_summary.csv"  # Path to run_logs.csv
-    summary_file_path = "./data/2025-01-21_21-51-35/iteration_summary.csv"  # Path for the new summary file
+    folder_path = "./data/2025-01-27_21-26-32/Client"  # Update with your folder path
+    run_logs_path = "./data/2025-01-27_21-26-32/script_summary.csv"  # Path to run_logs.csv
+    summary_file_path = "./data/2025-01-27_21-26-32/iteration_summary.csv"  # Path for the new summary file
     main(folder_path, run_logs_path, summary_file_path)
