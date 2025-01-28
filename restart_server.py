@@ -4,7 +4,7 @@ import requests
 def restart_server():
     try:
         # Replace with your Node.js server's URL
-        url = "http://130.215.30.198:7777/restart"  # Update with your server's actual URL
+        url = "http://localhost:7777/restart"  # Update with your server's actual URL
         response = requests.post(url, json={"message": "Restart requested"})
 
         if response.status_code == 200:
