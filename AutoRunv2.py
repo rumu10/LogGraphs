@@ -25,7 +25,7 @@ os.makedirs(batch_directory, exist_ok=True)
 print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
-run_count = 5
+run_count = 10
 run_unity= 60
 
 #algo 0 = E policy, 1- I-policy, 2=QM
@@ -34,25 +34,29 @@ run_unity= 60
 configs = [
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": 1},
     # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": 1},
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0},
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0},
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 0},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2},
-    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
-    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0},
-    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2},
-    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2},
-    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
-    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2},
-    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0},
-    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2},
-    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2},
-    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2},
+    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0, "baseLength": 3},
+    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
+    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2, "baseLength": 3},
+    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 0, "baseLength": 3},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2, "baseLength": 3},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 5},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 5},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 5},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 5},
+    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
+    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
+    # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 1, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2, "baseLength": 3},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
 ]
 
 log_file_path = os.path.join(batch_directory, "script_summary.csv")
@@ -62,25 +66,25 @@ with open(log_file_path, mode='w', newline='') as file:
     writer.writerow([
         "Run Number", "Run Start Time", "Run End Time", "Jitter.py Run Duration (s)", "Unity,exe Run Duration (s)","Server Restart Duration (s)",
         "Total Script Run Duration (s)",
-        "Unity.exe Stop Duration (s)", "Buffer Size", "Jitter Magnitude", "Policy"
+        "Unity.exe Stop Duration (s)", "Buffer Size", "Jitter Magnitude", "Policy", "baseLength"
     ])
 
 # Function to log messages to the CSV file
-def log_to_csv(run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration, stop_time, buffer_size, jitter_magnitude,algo):
+def log_to_csv(run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration, stop_time, buffer_size, jitter_magnitude,algo,baseLength):
     with open(log_file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([
             run_number, start_time, end_time, jitter_duration, unity_run_duration,server_duration, total_duration,
-            stop_time, buffer_size, jitter_magnitude,algo
+            stop_time, buffer_size, jitter_magnitude,algo,baseLength
         ])
 
-def update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo):
+def update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo,baseLength):
     """
     Update the config.csv file with the given parameters.
     """
     data = {
-        "param": ["bufferSize", "timeToWait", "roundDuration", "jitterValue","algo"],
-        "value": [buffer_size, time_to_wait, round_duration, jitter_value, algo],
+        "param": ["bufferSize", "timeToWait", "roundDuration", "jitterValue","algo", "baseLength"],
+        "value": [buffer_size, time_to_wait, round_duration, jitter_value, algo,baseLength],
     }
     df = pd.DataFrame(data)
     df.to_csv(config_file, index=False)
@@ -99,12 +103,12 @@ def stop_unity_client():
                 proc.terminate()
                 print("Forcefully terminated UnityClient.exe as it was still running.")
 
-def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, algo):
+def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, algo,baseLength):
     """
     Run a batch of Unity clients with the given parameters.
     """
     start_runbatch = time.time()
-    update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo)
+    update_config_file(buffer_size, time_to_wait, round_duration, jitter_value,algo,baseLength)
 
     for i in range(runs):
         print(f"Starting UnityClient.exe (Run {i + 1}/{runs})")
@@ -164,7 +168,8 @@ def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, alg
             stop_time=round(stop_duration, 2),
             buffer_size=buffer_size,
             jitter_magnitude=jitter_value,
-            algo = algo
+            algo = algo,
+            baseLength = baseLength
         )
 
         print(f"Run {i + 1}/{runs} logged successfully.")
@@ -177,6 +182,7 @@ for config in configs:
         time_to_wait=config["timeToWait"],
         round_duration=config["roundDuration"],
         jitter_value=config["jitterValue"],
-        algo=config["algo"]
+        algo=config["algo"],
+        baseLength=config["baseLength"]
     )
 print("All runs completed. Logs saved to", log_file_path)

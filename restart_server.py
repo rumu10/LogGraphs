@@ -36,7 +36,7 @@ def restart_server(batch_dir, run_number):
     """
     try:
         # Replace with your Node.js server's URL
-        url = "http://130.215.30.99:7777/restart"
+        url = "http://130.215.30.49:7777/restart"
         response = requests.post(url, json={"message": "Restart requested"})
 
         if response.status_code == 200:
