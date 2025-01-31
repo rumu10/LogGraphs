@@ -25,28 +25,27 @@ os.makedirs(batch_directory, exist_ok=True)
 print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
-run_count = 10
-run_unity= 60
+run_count = 20
+run_unity= 65
 
 #algo 0 = E policy, 1- I-policy, 2=QM
 
 # Configuration for splitting runs
 configs = [
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": 1},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": 1},
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0, "baseLength": 3},
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
-    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2, "baseLength": 3},
+    # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
     # {"bufferSize": 2, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 0, "baseLength": 3},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
-    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2, "baseLength": 3},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 5},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 0, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
     {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 5},
-    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 5},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 5},
     {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 5},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2, "baseLength": 3},
+    {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2, "baseLength": 3},
+    # {"bufferSize": 10, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 5},
     # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
     # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
     # {"bufferSize": 5, "timeToWait": 2, "roundDuration": 300, "jitterValue": 40, "run_count": run_count,"algo": 2, "baseLength": 3},
@@ -56,7 +55,7 @@ configs = [
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 0, "baseLength": 3},
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2, "baseLength": 3},
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2, "baseLength": 3},
-    # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 20, "run_count": run_count,"algo": 2, "baseLength": 3},
+    {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
 ]
 
 log_file_path = os.path.join(batch_directory, "script_summary.csv")
@@ -146,7 +145,6 @@ def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, alg
         # Close Unity client
         stop_start = time.time()
         stop_unity_client()
-        end_runbatch = time.time()
         stop_end = time.time()
         stop_duration = stop_end - stop_start
 
@@ -154,6 +152,7 @@ def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, alg
         s_clean.wait()
         # Log end time
         end_time = datetime.now()
+        end_runbatch = time.time()
         print(start_time.strftime('%Y-%m-%d %H:%M:%S'))
 
         # Log details to the CSV file

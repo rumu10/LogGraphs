@@ -54,7 +54,7 @@ def process_csv(file_path, output_folder):
     # Assign proper column names
     cleaned_data.columns = [
         'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
-        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference','display_latency','gap'
+        'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference','display_latency','gap','ql','counter','threshold'
     ]
 
     # Calculate metrics using the modular functions
@@ -187,7 +187,7 @@ def main(folder_path, run_logs_path, summary_file_path):
 
 # Run the script
 if __name__ == "__main__":
-    folder_path = "./data/2025-01-27_21-26-32/Client"  # Update with your folder path
-    run_logs_path = "./data/2025-01-27_21-26-32/script_summary.csv"  # Path to run_logs.csv
-    summary_file_path = "./data/2025-01-27_21-26-32/iteration_summary.csv"  # Path for the new summary file
+    folder_path = "./data/2025-01-29_23-15-39/Client"  # Update with your folder path
+    run_logs_path = "./data/2025-01-29_23-15-39/script_summary.csv"  # Path to run_logs.csv
+    summary_file_path = "./data/2025-01-29_23-15-39/iteration_summary.csv"  # Path for the new summary file
     main(folder_path, run_logs_path, summary_file_path)
