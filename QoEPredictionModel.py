@@ -61,19 +61,19 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
     grouped_df.to_csv(output_grouped_csv)
     print(f"Grouped QoE results saved to {output_grouped_csv}")
 
-    # Optionally save both in an Excel file
-    if output_excel:
-        with pd.ExcelWriter(output_excel) as writer:
-            per_run_df.to_excel(writer, sheet_name="QoE_Per_Run", index=False)
-            grouped_df.to_excel(writer, sheet_name="QoE_Grouped")
-        print(f"Both QoE results saved in {output_excel}")
+    # # Optionally save both in an Excel file
+    # if output_excel:
+    #     with pd.ExcelWriter(output_excel) as writer:
+    #         per_run_df.to_excel(writer, sheet_name="QoE_Per_Run", index=False)
+    #         grouped_df.to_excel(writer, sheet_name="QoE_Grouped")
+    #     print(f"Both QoE results saved in {output_excel}")
 
 
 # Example usage
 if __name__ == "__main__":
-    input_csv = "./data/2025-01-29_23-15-39/iteration_summary.csv"
-    output_per_run_csv = "./data/2025-01-29_23-15-39/qoe_results_per_iteration.csv"
-    output_grouped_csv = "./data/2025-01-29_23-15-39/qoe_results_grouped.csv"
-    output_excel = "./data/2025-01-29_23-15-39/qoe_results.xlsx"  # Optional Excel file
+    input_csv = "./data/2025-01-31_00-09-06/iteration_summary.csv"
+    output_per_run_csv = "./data/2025-01-31_00-09-06/qoe_results_per_iteration.csv"
+    output_grouped_csv = "./data/2025-01-31_00-09-06/qoe_results_grouped.csv"
+    output_excel = "./data/2025-01-31_00-09-06/qoe_results.xlsx"  # Optional Excel file
 
     process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_excel)

@@ -4,6 +4,9 @@ import matplotlib.ticker as ticker
 import os
 import numpy as np
 
+threshold = 33.333334
+# threshold = 25.000005
+
 def calculate_average_queue_size(data, column='queue_size(D)'):
     return data[column].mean()
 
@@ -16,17 +19,17 @@ def calculate_average_frame_time(data, column='dequeue_interval'):
 def calculate_standard_deviation_frame_time(data, column='dequeue_interval'):
     return data[column].std()
 
-def count_interrupts(data, column='dequeue_interval', threshold=33.333334):
+def count_interrupts(data, column='dequeue_interval', threshold=threshold):
     """Count the number of interrupts in the specified column based on the given threshold."""
     return (data[column] > threshold).sum()
 
-def calculate_interrupt_magnitude(data, column='dequeue_interval', threshold=33.333334):
+def calculate_interrupt_magnitude(data, column='dequeue_interval', threshold=threshold):
     """Get the magnitudes of interrupts as a comma-separated string."""
     interrupt_values = data[column][data[column] > threshold]
     return ", ".join(map(str, interrupt_values))
 
 
-def calculate_interrupt_magnitude_per_second(data, column='dequeue_interval', threshold=33.333334):
+def calculate_interrupt_magnitude_per_second(data, column='dequeue_interval', threshold=threshold):
     """
     Calculate the total magnitude of interrupts per second.
     Interrupt magnitude is calculated as (interrupt_value - threshold),
@@ -45,14 +48,14 @@ def calculate_interrupt_magnitude_per_second(data, column='dequeue_interval', th
         return total_magnitude / total_duration
     else:
         return 0  # Prevent division by zero
-def calculate_interrupt_std(data, column='dequeue_interval', threshold=33.333334):
+def calculate_interrupt_std(data, column='dequeue_interval', threshold=threshold):
     """
     Calculate the standard deviation of interrupt magnitudes.
     This measures how much the interrupt values fluctuate from the average excess delay.
     """
     interrupt_values = data[column][data[column] > threshold] - threshold  # Only consider values exceeding threshold
     return np.std(interrupt_values) if len(interrupt_values) > 0 else 0  # Return 0 if no interrupts
-def calculate_interrupt_frequency(data, column='dequeue_interval', threshold=33.333334):
+def calculate_interrupt_frequency(data, column='dequeue_interval', threshold=threshold):
     """Calculate the interrupt frequency (number of interrupts per second)."""
     total_time = data['timer'].max()  # Get total duration of the run from the timer column
     interrupt_count = (data[column] > threshold).sum()
@@ -185,7 +188,7 @@ def main(folder_path, run_logs_path, summary_file_path):
     print(f"Summary file saved as {summary_file_path}")
 
 if __name__ == "__main__":
-    folder_path = "./data/2025-01-29_23-15-39/Client"
-    run_logs_path = "./data/2025-01-29_23-15-39/script_summary.csv"
-    summary_file_path = "./data/2025-01-29_23-15-39/iteration_summary.csv"
+    folder_path = "./data/2025-01-31_00-09-06/Client"
+    run_logs_path = "./data/2025-01-31_00-09-06/script_summary.csv"
+    summary_file_path = "./data/2025-01-31_00-09-06/iteration_summary.csv"
     main(folder_path, run_logs_path, summary_file_path)
