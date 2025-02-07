@@ -1,0 +1,2 @@
+Run Number,Run Start Time,Run End Time,Jitter.py Run Duration (s),"Unity,exe Run Duration (s)",Server Restart Duration (s),Total Script Run Duration (s),Unity.exe Stop Duration (s),Buffer Size,Jitter Magnitude,Policy,baseLength,threshold,decay
+1,'2025-02-06 20:33:21,'2025-02-06 20:33:46,3.32,10,9.798215389251709,25.707144021987915,1.63,10,0,2,3,600,1.5

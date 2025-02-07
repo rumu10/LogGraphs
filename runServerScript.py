@@ -1,7 +1,7 @@
 import paramiko
 import time
 
-hostname = "130.215.30.49"
+hostname = "130.215.30.29"
 username = "claypool"  # Adjust if necessary
 password = "1012"  # Use an empty string if no password
 remote_script_path = "C:/Users/claypool/Desktop/rumu/GitHub/LogGraphs/startAndStopServer.py"

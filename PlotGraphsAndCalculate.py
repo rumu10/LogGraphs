@@ -77,7 +77,7 @@ def process_csv(file_path, output_folder):
     cleaned_data.columns = [
         'timer', 'enqueue_interval', 'deque_timer', 'dequeue_interval',
         'frames_in_queue', 'running_avg_5', 'queue_size(D)', 'expected_sleep', 'sleep_difference',
-        'display_latency', 'gap', 'ql', 'counter', 'threshold'
+        'display_latency', 'gap'
     ]
 
     # Get total run time
@@ -164,6 +164,8 @@ def main(folder_path, run_logs_path, summary_file_path):
             jitter_value = run_logs.loc[run_idx - 1, 'Jitter Magnitude'] if run_idx - 1 < len(run_logs) else "N/A"
             policy = run_logs.loc[run_idx - 1, 'Policy'] if run_idx - 1 < len(run_logs) else "N/A"
             base_length_qm = run_logs.loc[run_idx - 1, 'baseLength'] if run_idx - 1 < len(run_logs) else "N/A"
+            threshold_qm = run_logs.loc[run_idx - 1, 'threshold'] if run_idx - 1 < len(run_logs) else "N/A"
+            decay_qm = run_logs.loc[run_idx - 1, 'decay'] if run_idx - 1 < len(run_logs) else "N/A"
 
             summary_data.append({
                 "Iteration": run_idx,
@@ -172,6 +174,8 @@ def main(folder_path, run_logs_path, summary_file_path):
                 "Jitter Magnitude": jitter_value,
                 "Policy": policy,
                 "Base Length for Thresholding": base_length_qm,
+                "Threshold": threshold_qm,
+                "Decay": decay_qm,
                 "Average Queue Size": avg_queue_size,
                 "Std Dev Queue Size": std_queue_size,
                 "Average Frame Time": average_frame_time,

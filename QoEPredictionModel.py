@@ -29,7 +29,7 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
 
     # Ensure correct column names
     required_columns = ['Std Dev Frame Time', 'Interrupt Frequency (/s)', 'Interrupt Mag (ms/s)',
-                        'Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding']
+                        'Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding','Threshold', 'Decay']
 
     for col in required_columns:
         if col not in df.columns:
@@ -45,7 +45,7 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
     df['QoE_IM'] = df.apply(lambda row: predict_qoe(0, 0, row['Interrupt Mag (ms/s)'])[2], axis=1)
 
     # Keep only required columns for per-run QoE
-    per_run_df = df[['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding',
+    per_run_df = df[['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding', 'Thrshold', 'Decay',
                      'Std Dev Frame Time', 'Interrupt Frequency (/s)', 'Interrupt Mag (ms/s)',
                      'QoE_FTSD', 'QoE_IF', 'QoE_IM']]
 
@@ -55,7 +55,7 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
 
     # Group by settings and compute mean values
     grouped_df = per_run_df.groupby(
-        ['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding']).mean()
+        ['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding','Threshold','Decay']).mean()
 
     # Save grouped QoE file
     grouped_df.to_csv(output_grouped_csv)
