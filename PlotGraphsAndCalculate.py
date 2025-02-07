@@ -192,7 +192,7 @@ def main(folder_path, run_logs_path, summary_file_path):
     print(f"Summary file saved as {summary_file_path}")
 
 if __name__ == "__main__":
-    folder_path = "./data/2025-01-31_00-09-06/Client"
-    run_logs_path = "./data/2025-01-31_00-09-06/script_summary.csv"
-    summary_file_path = "./data/2025-01-31_00-09-06/iteration_summary.csv"
+    folder_path = "./data/2025-02-06_20-39-37/Client"
+    run_logs_path = "./data/2025-02-06_20-39-37/script_summary.csv"
+    summary_file_path = "./data/2025-02-06_20-39-37/iteration_summary.csv"
     main(folder_path, run_logs_path, summary_file_path)

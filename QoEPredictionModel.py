@@ -45,7 +45,7 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
     df['QoE_IM'] = df.apply(lambda row: predict_qoe(0, 0, row['Interrupt Mag (ms/s)'])[2], axis=1)
 
     # Keep only required columns for per-run QoE
-    per_run_df = df[['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding', 'Thrshold', 'Decay',
+    per_run_df = df[['Buffer Size', 'Jitter Magnitude', 'Policy', 'Base Length for Thresholding', 'Threshold', 'Decay',
                      'Std Dev Frame Time', 'Interrupt Frequency (/s)', 'Interrupt Mag (ms/s)',
                      'QoE_FTSD', 'QoE_IF', 'QoE_IM']]
 
@@ -71,9 +71,9 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_ex
 
 # Example usage
 if __name__ == "__main__":
-    input_csv = "./data/2025-01-31_00-09-06/iteration_summary.csv"
-    output_per_run_csv = "./data/2025-01-31_00-09-06/qoe_results_per_iteration.csv"
-    output_grouped_csv = "./data/2025-01-31_00-09-06/qoe_results_grouped.csv"
-    output_excel = "./data/2025-01-31_00-09-06/qoe_results.xlsx"  # Optional Excel file
+    input_csv = "./data/2025-02-06_20-39-37/iteration_summary.csv"
+    output_per_run_csv = "./data/2025-02-06_20-39-37/qoe_results_per_iteration.csv"
+    output_grouped_csv = "./data/2025-02-06_20-39-37/qoe_results_grouped.csv"
+    output_excel = "./data/2025-02-06_20-39-37/qoe_results.xlsx"  # Optional Excel file
 
     process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv, output_excel)
