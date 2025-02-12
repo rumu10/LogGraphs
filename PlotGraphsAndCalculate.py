@@ -167,6 +167,13 @@ def main(folder_path, run_logs_path, summary_file_path):
             threshold_qm = run_logs.loc[run_idx - 1, 'threshold'] if run_idx - 1 < len(run_logs) else "N/A"
             decay_qm = run_logs.loc[run_idx - 1, 'decay'] if run_idx - 1 < len(run_logs) else "N/A"
 
+            if policy == 0:
+                policy = "E-Policy"
+            elif policy == 2:
+                policy = "QM"
+            else:
+                policy = "I-Policy"
+
             summary_data.append({
                 "Iteration": run_idx,
                 "File": filename,
@@ -191,8 +198,38 @@ def main(folder_path, run_logs_path, summary_file_path):
     summary_df.to_csv(summary_file_path, index=False)
     print(f"Summary file saved as {summary_file_path}")
 
+def create_settings_based_csv(iteration_summary_path, settings_output_folder):
+    # Load the iteration summary file
+    summary_df = pd.read_csv(iteration_summary_path)
+
+    # Select columns that define unique settings (excluding base length)
+    settings_columns = ["Buffer Size", "Jitter Magnitude", "Policy", "Threshold", "Decay"]
+
+    # Create the settings_runs folder if it doesn't exist
+    os.makedirs(settings_output_folder, exist_ok=True)
+
+    # Group the data based on unique settings
+    grouped = summary_df.groupby(settings_columns)
+
+    for setting_values, group in grouped:
+        # Generate a unique filename based on the setting values
+        buffer_size, jitter, policy, threshold, decay = setting_values
+        filename = f"policy_{policy}_buffer_{buffer_size}_jitter_{jitter}_threshold_{threshold}_decay_{decay}.csv"
+
+        # Define the file path
+        file_path = os.path.join(settings_output_folder, filename)
+
+        # Save the grouped data to CSV
+        group.to_csv(file_path, index=False)
+
+        print(f"Saved settings-based CSV: {file_path}")
+
 if __name__ == "__main__":
-    folder_path = "./data/2025-02-06_20-39-37/Client"
-    run_logs_path = "./data/2025-02-06_20-39-37/script_summary.csv"
-    summary_file_path = "./data/2025-02-06_20-39-37/iteration_summary.csv"
-    main(folder_path, run_logs_path, summary_file_path)
+    folder_path = "./data/2025-02-10_18-39-05/Client"
+    run_logs_path = "./data/2025-02-10_18-39-05/script_summary.csv"
+    iteration_summary_path = "./data/2025-02-10_18-39-05/iteration_summary.csv"
+    settings_output_folder = "./data/2025-02-10_18-39-05/settings_runs"
+    main(folder_path, run_logs_path, iteration_summary_path)
+
+    create_settings_based_csv(iteration_summary_path, settings_output_folder)
+

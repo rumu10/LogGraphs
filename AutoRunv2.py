@@ -25,7 +25,7 @@ os.makedirs(batch_directory, exist_ok=True)
 print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
-run_count = 20
+run_count = 50
 run_unity= 65
 
 #algo 0 = E policy, 1- I-policy, 2=QM
@@ -57,21 +57,29 @@ configs = [
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 2, "baseLength": 3},
     # {"bufferSize": 0, "timeToWait": 2, "roundDuration": 300, "jitterValue": 0, "run_count": run_count,"algo": 0, "baseLength": 3},
 
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0, "baseLength": 3, "threshold":600,"decay":2},
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3, "threshold":600,"decay":2},
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,  "baseLength": 3, "threshold":600,"decay":2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0, "baseLength": 3, "threshold":600,"decay":2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0, "baseLength": 3, "threshold":600,"decay":2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,  "baseLength": 3, "threshold":600,"decay":2},
+
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
+
+    {"bufferSize": 5, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
+    {"bufferSize": 5, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
+    {"bufferSize": 5, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 3, "threshold": 600, "decay": 2},
     #
     # {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay":2},
     # {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay":2},
     # {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay":2},
     #
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 1.5},
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 1.5},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 1.5},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 1.5},
     {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 1.5},
 
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
-    {"bufferSize": 10, "timeToWait": 4, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
+    {"bufferSize": 10, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,  "baseLength": 3, "threshold":600,"decay": 2},
 ]
 
 log_file_path = os.path.join(batch_directory, "script_summary.csv")
