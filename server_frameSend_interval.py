@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-def process_server_log(file_path, output_folder):
+def process_server_log(file_path):
     """
     Process a single server log file: clean data, calculate metrics, and generate plots.
     """
@@ -23,10 +23,10 @@ def process_server_log(file_path, output_folder):
     cleaned_data = cleaned_data.dropna().reset_index(drop=True)
 
     # Save the cleaned data back to a new file in the output folder
-    cleaned_file_name = os.path.basename(file_path).replace(".csv", "_cleaned.csv")
-    cleaned_file_path = os.path.join(output_folder, cleaned_file_name)
-    cleaned_data.to_csv(cleaned_file_path, header=True, index=False)
-    print(f"Cleaned server log saved as {cleaned_file_path}")
+    # cleaned_file_name = os.path.basename(file_path).replace(".csv", "_cleaned.csv")
+    # cleaned_file_path = os.path.join(file_path, cleaned_file_name)
+    # cleaned_data.to_csv(cleaned_file_path, header=True, index=False)
+    # print(f"Cleaned server log saved as {cleaned_file_path}")
 
     # Generate the plot
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -43,7 +43,7 @@ def process_server_log(file_path, output_folder):
     ax.set_ylabel('Interval (ms)')
 
     # Add grid for better visualization
-    ax.grid(True, linestyle='--', linewidth=0.5)
+    # ax.grid(True, linestyle='--', linewidth=0.5)
 
     # Set axis limits dynamically based on data range
     ax.set_xlim([3, 60])
@@ -53,14 +53,16 @@ def process_server_log(file_path, output_folder):
     ax.legend()
 
     # Save the plot to the output folder
-    plot_file_path = os.path.join(output_folder, os.path.basename(file_path).replace(".csv", ".png"))
-    plt.savefig(plot_file_path)
-    print(f"Plot saved as {plot_file_path}")
+    plot_file_path = os.path.join(file_path, os.path.basename(file_path).replace(".csv", ".png"))
+    # plt.savefig(plot_file_path)
+    # print(f"Plot saved as {plot_file_path}")
+
+    plt.show()
 
     # Close the plot to free memory
     plt.close(fig)
 
-def main(server_logs_folder, iteration_folders_base):
+def main(server_logs_folder):
     """
     Main function to process all server logs and save output to the corresponding iteration folders.
     """
@@ -74,24 +76,24 @@ def main(server_logs_folder, iteration_folders_base):
     # Process each server log file
     for idx, log_file in enumerate(server_log_files, start=1):
         # Determine the corresponding iteration folder
-        iteration_folder = os.path.join(iteration_folders_base, f"iteration_{idx}")
+        # iteration_folder = os.path.join(iteration_folders_base, f"iteration_{idx}")
 
         # Ensure the iteration folder exists
-        if not os.path.exists(iteration_folder):
-            print(f"Warning: Iteration folder '{iteration_folder}' does not exist. Skipping {log_file}.")
-            continue
-
+        # if not os.path.exists(iteration_folder):
+        #     print(f"Warning: Iteration folder '{iteration_folder}' does not exist. Skipping {log_file}.")
+        #     continue
+        #
         # Process the server log and save the output in the iteration folder
         file_path = os.path.join(server_logs_folder, log_file)
-        process_server_log(file_path, iteration_folder)
+        process_server_log(file_path)
 
 
 if __name__ == "__main__":
     # Folder containing the server logs
-    server_logs_folder = r"C:\Users\claypool-316\Desktop\Rumu\pythonProject\data\2024-12-09_18-00-46\server"  # Update path as needed
+    server_logs_folder = "./data/2025-02-10_18-39-05/Server"   # Update path as needed
 
     # Base folder for iteration folders
-    iteration_folders_base = r"C:\Users\claypool-316\Desktop\Rumu\pythonProject\data\2024-12-09_18-00-46\Runs"  # Update path as needed
+    # iteration_folders_base = "./data/2025-02-10_18-39-05/Server"  # Update path as needed
 
     # Run the main processing function
-    main(server_logs_folder, iteration_folders_base)
+    main(server_logs_folder)
