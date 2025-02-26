@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 import os
+import re  # Import regex for filename cleaning
 
 # Function to compute confidence interval
 def compute_confidence_interval(data):
@@ -23,10 +24,14 @@ def compute_confidence_interval(data):
     return ci
 
 # Load the iteration summary CSV
-iteration_summary_path = "./data/2025-02-10_18-39-05/iteration_summary.csv"
+iteration_summary_path = "./data/2025-02-24_18-42-26/iteration_summary.csv"
+output_path = "./data/2025-02-24_18-42-26/CI"
 
 if not os.path.exists(iteration_summary_path):
     raise FileNotFoundError(f"Error: {iteration_summary_path} not found.")
+
+# Ensure output directory exists
+os.makedirs(output_path, exist_ok=True)
 
 df = pd.read_csv(iteration_summary_path)
 
@@ -35,7 +40,7 @@ df["Jitter Magnitude"] = df["Jitter Magnitude"] * 2
 
 # Extract relevant columns
 metrics = {
-    "Average Queue": "Average Queue Size",
+    "Delay": "Average Queue Size",
     "IM (ms/s)": "Interrupt Mag (ms/s)",
     "Average FT": "Average Frame Time",
     "FTSD": "Std Dev Frame Time"
@@ -49,28 +54,27 @@ df["Policy"] = df.apply(lambda row: f"{row['Policy']}({row['Buffer Size']})" if 
 else f"{row['Policy']}({row['Buffer Size']}, T={row['Threshold']}, D={row['Decay']})", axis=1)
 policies = df["Policy"].unique()
 
-# Define custom bright neon-like colors
+# Define custom darker color palette
 custom_colors = [
-    "#FF5733",  # Bright Orange
-    "#33FF57",  # Neon Green
-    "#3357FF",  # Bright Blue
-    "#B833FF",  # Vibrant Purple
-    "#FF33A1",  # Hot Pink
-    "#33FFF3",  # Cyan
-    "#F3FF33",  # Bright Yellow-Green
-    "#FF8C33",  # Neon Orange
+    "#8B0000",  # Dark Red
+    "#006400",  # Dark Green
+    "#00008B",  # Dark Blue
+    "#4B0082",  # Indigo
+    "#8B4513",  # Saddle Brown
+    "#2F4F4F",  # Dark Slate Gray
+    "#FF8C00",  # Dark Orange
+    "#483D8B",  # Dark Slate Blue
 ]
 
 # Jittering function based on y-values to prevent overlap
-def jitter(values, y_values, base_scale=3.5):
+def jitter(values, y_values, base_scale=2.5):
     """Applies jittering based on y-values to keep sorting."""
-    scale_factors = np.interp(y_values, (min(y_values), max(y_values)), (base_scale, 2.5))  # Lower y-values get more jitter
+    scale_factors = np.interp(y_values, (min(y_values), max(y_values)), (base_scale, 1.5))  # Lower y-values get more jitter
     return values + np.random.uniform(-scale_factors, scale_factors, size=len(values))
 
 # Generate individual plots
 for metric_name, column_name in metrics.items():
-    plt.figure(figsize=(8, 5))
-    plt.title(f"{metric_name} with Confidence Interval")
+    plt.figure(figsize=(10, 6))
 
     all_means = []  # Store means for sorting
     all_policies = []
@@ -101,7 +105,7 @@ for metric_name, column_name in metrics.items():
 
     # Replot using sorted policies
     for i, (policy, means, ci_lows, ci_highs, jitter_positions) in enumerate(all_means):
-        jittered_x = jitter(np.array(jitter_positions), np.array(means), base_scale=3.5)  # Apply jitter based on y-values
+        jittered_x = jitter(np.array(jitter_positions), np.array(means), base_scale=2.5)  # Apply jitter based on y-values
         color = custom_colors[i % len(custom_colors)]  # Assign color
 
         # Plot error bars for confidence intervals
@@ -114,9 +118,22 @@ for metric_name, column_name in metrics.items():
         plt.plot(np.array(jittered_x)[sorted_indices], np.array(means)[sorted_indices],
                  linestyle='-', alpha=0.8, color=color)
 
-    plt.xlabel("Jitter Magnitude (ms)")
-    plt.ylabel(metric_name)
-    plt.xticks(jitter_values)
-    # plt.grid(True)
-    plt.legend(title="Policy", loc="lower right", bbox_to_anchor=(1, 1))  # Legend moved outside for clarity
-    plt.show()
+    plt.xlabel("Jitter Magnitude (ms)", fontsize=14, fontweight='bold')
+    plt.ylabel(metric_name, fontsize=14, fontweight='bold')
+    plt.xticks(jitter_values, fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.grid(True, linestyle='--', alpha=0.6)
+
+    # Move legend to bottom-left corner
+    plt.legend(title="Policy", loc="lower right")
+
+    # **Sanitize filename to remove special characters**
+    safe_metric_name = re.sub(r'[^\w\s]', '_', metric_name)  # Replace non-alphanumeric characters
+    plot_filename = f"{safe_metric_name}_CI_plot.png"
+    plot_filepath = os.path.join(output_path, plot_filename)
+
+    # **Save the plot to the output folder**
+    plt.savefig(plot_filepath, bbox_inches="tight")
+    print(f"Plot saved: {plot_filepath}")
+
+    # plt.show()

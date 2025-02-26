@@ -1,2 +1,0 @@
-Iteration,File,Buffer Size,Jitter Magnitude,Policy,Base Length for Thresholding,Threshold,Decay,Average Queue Size,Std Dev Queue Size,Average Frame Time,Std Dev Frame Time,Interrupt Count,Interrupts Magnitude(ms),Interrupt Mag (ms/s),Std Interrupt Mag,Interrupt Frequency (/s)
-2,jitter_values_20250210_183249.csv,5,40,E-Policy,3,600,2.0,9.871794871794872,0.517038074569153,16.673108974358975,1.508073188280086,0,,0.0,0,0.0

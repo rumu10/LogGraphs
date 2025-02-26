@@ -129,21 +129,14 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\data\2025-02-10_18-32-00\iteration_summary.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\data\2025-02-10_18-32-00\script_summary.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\data\2025-02-10_18-39-05\script_summary.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\data\2025-02-24_18-42-26\iteration_summary.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
