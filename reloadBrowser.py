@@ -2,55 +2,28 @@ from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 
 
-# Configure Selenium to attach to the existing Edge session
 def attach_to_existing_browser():
-    print("starting")
+    print("Starting...")
     options = Options()
-    options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")  # Match the debugging port
+    options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
 
     try:
-        driver = webdriver.Edge(options=options)  # Connect to the existing session
+        driver = webdriver.Edge(options=options)
         print("Successfully attached to the existing browser session.")
 
+        # Disable cache so that each refresh fetches fresh content
+        driver.execute_cdp_cmd('Network.setCacheDisabled', {'cacheDisabled': True})
 
-        # Reload the current tab
-        driver.refresh()
-        print("Browser tab reloaded.")
-        print("Page reloaded.", flush=True)
+        # Use a hard reload to bypass cache completely
+        driver.execute_script("window.location.reload(true);")
+        print("Browser tab reloaded with cache bypass.")
 
-        # Close the Selenium WebDriver instance but leave the browser running
-        driver.quit()  # Disconnect Selenium without closing the browser
-        print("Disconnected Selenium session. Browser remains open.")
+        # Optionally, do not quit the session if you plan on reusing it
+        # driver.quit()  # Avoid terminating the session if you want to reattach later
+        print("Selenium session remains active for further interactions.")
     except Exception as e:
         print(f"Failed to attach to the existing browser session: {e}")
 
 
 if __name__ == "__main__":
-
     attach_to_existing_browser()
-
-#
-# from selenium import webdriver
-# from selenium.webdriver.edge.service import Service
-# from selenium.webdriver.edge.options import Options
-#
-# # Path to EdgeDriver executable
-# EDGE_DRIVER_PATH = r"C:\WebDriver\msedgedriver.exe"  # Update this path
-#
-# # Set up options for Microsoft Edge
-# options = Options()
-# options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
-# options.add_argument("--start-maximized")  # Open browser in maximized mode
-# # Add more options if needed, e.g., headless mode:
-# # options.add_argument("--headless")  # Run in headless mode (no UI)
-#
-# # Set up the Service object
-# service = Service(EDGE_DRIVER_PATH)
-#
-# # Start the WebDriver and open Microsoft Edge
-# driver = webdriver.Edge(service=service, options=options)
-#
-# # Open a website
-# driver.refresh()
-# driver.quit()
-
