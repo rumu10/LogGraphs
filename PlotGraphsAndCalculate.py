@@ -225,10 +225,10 @@ def create_settings_based_csv(iteration_summary_path, settings_output_folder):
         print(f"Saved settings-based CSV: {file_path}")
 
 if __name__ == "__main__":
-    folder_path = "./data/2025-02-24_18-42-26/Client"
-    run_logs_path = "./data/2025-02-24_18-42-26/script_summary.csv"
-    iteration_summary_path = "./data/2025-02-24_18-42-26/iteration_summary.csv"
-    settings_output_folder = "./data/2025-02-24_18-42-26/settings_runs"
+    folder_path = "./data/2025-02-26_15-54-51/Client"
+    run_logs_path = "./data/2025-02-26_15-54-51/script_summary.csv"
+    iteration_summary_path = "./data/2025-02-26_15-54-51/iteration_summary.csv"
+    settings_output_folder = "./data/2025-02-26_15-54-51/settings_runs"
     main(folder_path, run_logs_path, iteration_summary_path)
 
     create_settings_based_csv(iteration_summary_path, settings_output_folder)

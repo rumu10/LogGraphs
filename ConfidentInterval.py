@@ -24,8 +24,8 @@ def compute_confidence_interval(data):
     return ci
 
 # Load the iteration summary CSV
-iteration_summary_path = "./data/2025-02-24_18-42-26/iteration_summary.csv"
-output_path = "./data/2025-02-24_18-42-26/CI"
+iteration_summary_path = "./data/2025-02-26_15-54-51/iteration_summary.csv"
+output_path = "./data/2025-02-26_15-54-51/CI"
 
 if not os.path.exists(iteration_summary_path):
     raise FileNotFoundError(f"Error: {iteration_summary_path} not found.")
@@ -125,7 +125,7 @@ for metric_name, column_name in metrics.items():
     plt.grid(True, linestyle='--', alpha=0.6)
 
     # Move legend to bottom-left corner
-    plt.legend(title="Policy", loc="lower right")
+    plt.legend(title="Policy", loc="best")
 
     # **Sanitize filename to remove special characters**
     safe_metric_name = re.sub(r'[^\w\s]', '_', metric_name)  # Replace non-alphanumeric characters

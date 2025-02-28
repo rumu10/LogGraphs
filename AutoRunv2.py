@@ -25,7 +25,7 @@ os.makedirs(batch_directory, exist_ok=True)
 print(f"Batch directory created: {batch_directory}")
 
 # Total number of runs
-run_count = 15
+run_count = 35
 run_unity= 63
 
 #algo 0 = E policy, 1- I-policy, 2=QM
