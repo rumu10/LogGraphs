@@ -88,10 +88,10 @@ def main(server_logs_folder, plots_folder):
 
 if __name__ == "__main__":
     # Folder containing the server logs
-    server_logs_folder = "./data/2025-02-26_15-54-51/Server"  # Update path as needed
+    server_logs_folder = "./data/2025-02-27_18-35-52/Server"  # Update path as needed
 
     # Folder to store all cleaned files & plots
-    plots_folder = "./data/2025-02-26_15-54-51/Server/plots"  # Save everything here
+    plots_folder = "./data/2025-02-27_18-35-52/Server/plots"  # Save everything here
 
     # Run the main processing function
     main(server_logs_folder, plots_folder)

@@ -24,8 +24,8 @@ def compute_confidence_interval(data):
     return ci
 
 # Load the iteration summary CSV
-iteration_summary_path = "./data/2025-02-26_15-54-51/iteration_summary.csv"
-output_path = "./data/2025-02-26_15-54-51/CI"
+iteration_summary_path = "./data/2025-02-27_18-35-52/iteration_summary.csv"
+output_path = "./data/2025-02-27_18-35-52/CI"
 
 if not os.path.exists(iteration_summary_path):
     raise FileNotFoundError(f"Error: {iteration_summary_path} not found.")
