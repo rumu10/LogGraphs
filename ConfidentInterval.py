@@ -24,8 +24,8 @@ def compute_confidence_interval(data):
     return ci
 
 # Load the iteration summary CSV
-iteration_summary_path = "./data/2025-02-27_18-35-52/iteration_summary.csv"
-output_path = "./data/2025-02-27_18-35-52/CI"
+iteration_summary_path = "./data/2025-02-28_18-34-37/iteration_summary.csv"
+output_path = "./data/2025-02-28_18-34-37/CI"
 
 if not os.path.exists(iteration_summary_path):
     raise FileNotFoundError(f"Error: {iteration_summary_path} not found.")
@@ -40,7 +40,7 @@ df["Jitter Magnitude"] = df["Jitter Magnitude"] * 2
 
 # Extract relevant columns
 metrics = {
-    "Delay": "Average Queue Size",
+    "Delay": "Average Queue Size",  # Converted to Frame Time later
     "IM (ms/s)": "Interrupt Mag (ms/s)",
     "Average FT": "Average Frame Time",
     "FTSD": "Std Dev Frame Time"
@@ -51,7 +51,7 @@ jitter_values = sorted(df["Jitter Magnitude"].unique())
 
 # Unique policies based on buffer size and thresholding method
 df["Policy"] = df.apply(lambda row: f"{row['Policy']}({row['Buffer Size']})" if "E-Policy" in row["Policy"]
-else f"{row['Policy']}({row['Buffer Size']}, T={row['Threshold']}, D={row['Decay']})", axis=1)
+else f"{row['Policy']}({row['Threshold']},{row['Decay']})", axis=1)
 policies = df["Policy"].unique()
 
 # Define custom darker color palette
@@ -65,6 +65,9 @@ custom_colors = [
     "#FF8C00",  # Dark Orange
     "#483D8B",  # Dark Slate Blue
 ]
+
+# Define different marker shapes for each policy
+marker_shapes = ['o', 's', '^', 'D', '*', 'h', 'p', 'v']
 
 # Jittering function based on y-values to prevent overlap
 def jitter(values, y_values, base_scale=2.5):
@@ -91,6 +94,12 @@ for metric_name, column_name in metrics.items():
             mean_value = np.mean(subset)
             ci_low, ci_high = compute_confidence_interval(subset)
 
+            # **Convert Average Queue Size to Frame Time (Only for Delay plot)**
+            if metric_name == "Delay":
+                mean_value *= 16.6667
+                ci_low *= 16.6667
+                ci_high *= 16.6667
+
             means.append(mean_value)
             ci_lows.append(ci_low)
             ci_highs.append(ci_high)
@@ -107,11 +116,12 @@ for metric_name, column_name in metrics.items():
     for i, (policy, means, ci_lows, ci_highs, jitter_positions) in enumerate(all_means):
         jittered_x = jitter(np.array(jitter_positions), np.array(means), base_scale=2.5)  # Apply jitter based on y-values
         color = custom_colors[i % len(custom_colors)]  # Assign color
+        marker = marker_shapes[i % len(marker_shapes)]  # Assign marker shape
 
         # Plot error bars for confidence intervals
         plt.errorbar(jittered_x, means,
                      yerr=[np.array(means) - np.array(ci_lows), np.array(ci_highs) - np.array(means)],
-                     fmt='o', capsize=5, label=policy, alpha=0.9, color=color)
+                     fmt=marker, capsize=5, label=policy, alpha=0.9, color=color, markersize=8)
 
         # Draw lines connecting the points for better visualization
         sorted_indices = np.argsort(jittered_x)  # Ensure lines follow correct order
@@ -119,10 +129,16 @@ for metric_name, column_name in metrics.items():
                  linestyle='-', alpha=0.8, color=color)
 
     plt.xlabel("Jitter Magnitude (ms)", fontsize=14, fontweight='bold')
-    plt.ylabel(metric_name, fontsize=14, fontweight='bold')
+
+    # **Update Y-axis label for Delay plot**
+    if metric_name == "Delay":
+        plt.ylabel("Delay (ms)", fontsize=14, fontweight='bold')
+        plt.ylim(0, max(means) + 20)  # Ensure Y-axis starts at 0
+    else:
+        plt.ylabel(metric_name, fontsize=14, fontweight='bold')
+
     plt.xticks(jitter_values, fontsize=12)
     plt.yticks(fontsize=12)
-    plt.grid(True, linestyle='--', alpha=0.6)
 
     # Move legend to bottom-left corner
     plt.legend(title="Policy", loc="best")

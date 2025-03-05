@@ -53,7 +53,7 @@ def process_server_log(file_path, output_folder):
     ax.grid(True, linestyle='--', linewidth=0.5)
 
     # Set axis limits to 3 - 63
-    ax.set_xlim([3, 63])
+    ax.set_xlim([5, 63])
     ax.set_ylim([cleaned_data["Interval"].min() * 0.9, cleaned_data["Interval"].max() * 1.1])
 
     # Add a legend
@@ -88,10 +88,10 @@ def main(server_logs_folder, plots_folder):
 
 if __name__ == "__main__":
     # Folder containing the server logs
-    server_logs_folder = "./data/2025-02-27_18-35-52/Server"  # Update path as needed
+    server_logs_folder = "./data/2025-02-28_18-34-37/Server"  # Update path as needed
 
     # Folder to store all cleaned files & plots
-    plots_folder = "./data/2025-02-27_18-35-52/Server/plots"  # Save everything here
+    plots_folder = "./data/2025-02-28_18-34-37/Server/plots"  # Save everything here
 
     # Run the main processing function
     main(server_logs_folder, plots_folder)

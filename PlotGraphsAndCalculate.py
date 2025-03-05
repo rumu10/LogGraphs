@@ -67,6 +67,9 @@ def process_csv(file_path, output_folder):
     raw_data = pd.read_csv(file_path, header=None)
     cleaned_data = raw_data.dropna(how='any').copy()
 
+    # **Skip the first 5 rows**
+    cleaned_data = cleaned_data.iloc[5:].reset_index(drop=True)
+
     # Save the cleaned data back to a new file
     cleaned_file_name = os.path.basename(file_path).replace(".csv", "_cleaned.csv")
     cleaned_file_path = os.path.join(output_folder, cleaned_file_name)
@@ -122,29 +125,14 @@ def process_csv(file_path, output_folder):
     combined_ax.set_ylabel('Frames')
     combined_ax.grid(True)
 
-    # combined_ax.text(
-    #     0.95, 0.95,
-    #     f"Avg Queue Size: {average_queue_size:.2f}\n"
-    #     f"Interrupts: {interrupt_count}\n"
-    #     f"Interrupt Mag: {interrupt_magnitude}\n"
-    #     f"Interrupt Mag (ms/s): {interrupt_magnitude_per_second:.2f}\n"
-    #     f"Interrupt Freq (/s): {interrupt_frequency:.2f}\n"
-    #     f"Std Dev Frame Time: {std_frame_time:.2f}\n"
-    #     f"Std Dev Queue Size: {std_queue_size:.2f}",
-    #     transform=combined_ax.transAxes,
-    #     fontsize=10,
-    #     verticalalignment='bottom',
-    #     horizontalalignment='right',
-    #     bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5)
-    # )
-
     # Save the plot
     output_filename = os.path.join(output_folder, os.path.basename(file_path).replace(".csv", ".png"))
     plt.savefig(output_filename)
     print(f"Saved plot for {os.path.basename(file_path)} as {output_filename}")
     plt.close(fig)
 
-    return average_queue_size,average_frame_time, std_queue_size, std_frame_time, interrupt_count, interrupt_magnitude, interrupt_magnitude_per_second, std_IM , interrupt_frequency
+    return average_queue_size, average_frame_time, std_queue_size, std_frame_time, interrupt_count, interrupt_magnitude, interrupt_magnitude_per_second, std_IM, interrupt_frequency
+
 
 def main(folder_path, run_logs_path, summary_file_path):
     run_logs = pd.read_csv(run_logs_path)
@@ -225,10 +213,10 @@ def create_settings_based_csv(iteration_summary_path, settings_output_folder):
         print(f"Saved settings-based CSV: {file_path}")
 
 if __name__ == "__main__":
-    folder_path = "./data/2025-02-27_18-35-52/Client"
-    run_logs_path = "./data/2025-02-27_18-35-52/script_summary.csv"
-    iteration_summary_path = "./data/2025-02-27_18-35-52/iteration_summary.csv"
-    settings_output_folder = "./data/2025-02-27_18-35-52/settings_runs"
+    folder_path = "./data/2025-02-28_18-34-37/Client"
+    run_logs_path = "./data/2025-02-28_18-34-37/script_summary.csv"
+    iteration_summary_path = "./data/2025-02-28_18-34-37/iteration_summary.csv"
+    settings_output_folder = "./data/2025-02-28_18-34-37/settings_runs"
     main(folder_path, run_logs_path, iteration_summary_path)
 
     create_settings_based_csv(iteration_summary_path, settings_output_folder)

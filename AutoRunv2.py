@@ -32,12 +32,12 @@ run_unity= 63
 
 # Configuration for splitting runs
 configs = [
-
-    {"bufferSize": 2, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 2, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 2, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 2, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
-    {"bufferSize": 2, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
+    #
+    # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
+    # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
+    # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold":600,"decay":2},
+    # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
+    # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
     #
     {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
     {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
@@ -57,18 +57,18 @@ configs = [
     {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 3},
     {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 3},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":3600,"decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":3600,"decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":3600,"decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 3600, "decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 3600, "decay": 2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 1.5},
 
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2, "baseLength": 3, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold": 120, "decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold": 120, "decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold": 120, "decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 120, "decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 120, "decay": 2},
 ]
 
 log_file_path = os.path.join(batch_directory, "script_summary.csv")
