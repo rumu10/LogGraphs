@@ -6,7 +6,7 @@ username = "claypool"  # Adjust if necessary
 password = "1012"  # Use an empty string if no password
 remote_script_path = "C:/Users/claypool/Desktop/rumu/GitHub/LogGraphs/startAndStopServer.py"
 python_path = "C:/Users/claypool/AppData/Local/Programs/Python/Python313/python.exe"  # Adjust path to Python
-timeout = 15  # Timeout in seconds
+timeout = 4  # Timeout in seconds
 
 try:
     print("Connecting to the server...")
