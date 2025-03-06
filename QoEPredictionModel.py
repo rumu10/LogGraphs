@@ -65,8 +65,8 @@ def process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv):
 
 # Example usage
 if __name__ == "__main__":
-    input_csv = "./data/2025-02-28_18-34-37/iteration_summary.csv"
-    output_per_run_csv = "./data/2025-02-28_18-34-37/qoe_results_per_iteration.csv"
-    output_grouped_csv = "./data/2025-02-28_18-34-37/qoe_results_grouped.csv"
+    input_csv = "./data/2025-03-04_22-24-12//iteration_summary.csv"
+    output_per_run_csv = "./data/2025-03-04_22-24-12//qoe_results_per_iteration.csv"
+    output_grouped_csv = "./data/2025-03-04_22-24-12//qoe_results_grouped.csv"
 
     process_qoe_csv(input_csv, output_per_run_csv, output_grouped_csv)
