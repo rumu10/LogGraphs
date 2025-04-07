@@ -24,8 +24,8 @@ def compute_confidence_interval(data):
     return ci
 
 # Load the iteration summary CSV
-iteration_summary_path = "./data/2025-03-04_22-24-12//iteration_summary.csv"
-output_path = "./data/2025-03-04_22-24-12//CI"
+iteration_summary_path = "./data/2025-03-04_22-24-12/iteration_summary.csv"
+output_path = "./data/2025-03-04_22-24-12/CI"
 
 if not os.path.exists(iteration_summary_path):
     raise FileNotFoundError(f"Error: {iteration_summary_path} not found.")
@@ -52,9 +52,9 @@ jitter_values = sorted(df["Jitter Magnitude"].unique())
 # Unique policies based on buffer size and thresholding method
 df["Policy"] = df.apply(lambda row: f"{row['Policy']}({row['Buffer Size']})" if "E-Policy" in row["Policy"]
 else f"{row['Policy']}({row['Threshold']},{row['Decay']})", axis=1)
-policies = df["Policy"].unique()
+policies = sorted(df["Policy"].unique())  # Sorted to maintain order
 
-# Define custom darker color palette
+# **Create a consistent color and marker mapping for policies**
 custom_colors = [
     "#8B0000",  # Dark Red
     "#006400",  # Dark Green
@@ -66,8 +66,10 @@ custom_colors = [
     "#483D8B",  # Dark Slate Blue
 ]
 
-# Define different marker shapes for each policy
 marker_shapes = ['o', 's', '^', 'D', '*', 'h', 'p', 'v']
+
+# **Assign colors and markers to each policy consistently**
+policy_styles = {policy: (custom_colors[i % len(custom_colors)], marker_shapes[i % len(marker_shapes)]) for i, policy in enumerate(policies)}
 
 # Jittering function based on y-values to prevent overlap
 def jitter(values, y_values, base_scale=2.5):
@@ -113,10 +115,9 @@ for metric_name, column_name in metrics.items():
     all_means.sort(key=lambda x: np.mean(x[1]))  # Sorting based on average y-value
 
     # Replot using sorted policies
-    for i, (policy, means, ci_lows, ci_highs, jitter_positions) in enumerate(all_means):
+    for policy, means, ci_lows, ci_highs, jitter_positions in all_means:
         jittered_x = jitter(np.array(jitter_positions), np.array(means), base_scale=2.5)  # Apply jitter based on y-values
-        color = custom_colors[i % len(custom_colors)]  # Assign color
-        marker = marker_shapes[i % len(marker_shapes)]  # Assign marker shape
+        color, marker = policy_styles[policy]  # Get consistent color and marker
 
         # Plot error bars for confidence intervals
         plt.errorbar(jittered_x, means,
