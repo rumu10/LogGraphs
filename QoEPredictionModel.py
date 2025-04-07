@@ -12,7 +12,7 @@ def predict_qoe(ftsd, interrupt_freq, interrupt_magnitude,delay):
     qoe_ftsd = -0.056 * ftsd + 4.6
     qoe_if = -0.023 * interrupt_freq + 3.7
     qoe_im = -0.004 * interrupt_magnitude + 4.0
-    qoe_delay = -0.005 * delay + 4.03
+    qoe_delay = -0.0148 * delay + 4.76
 
     # Ensure QoE is within range [1, 5]
     qoe_ftsd = max(1.0, min(5.0, qoe_ftsd))
