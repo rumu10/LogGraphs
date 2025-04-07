@@ -32,7 +32,7 @@ ssh.connect('192.168.1.1', 22, 'ubuntu', 'wpipassword', timeout=5)
 
 ssh.exec_command('sudo tc qdisc del dev eth0 root')
 time.sleep(0.5)
-ssh.exec_command(f'sudo tc qdisc add dev eth0 root netem delay 100ms {jitter_value}ms distribution f1300 rate 1000mbit')
+ssh.exec_command(f'sudo tc qdisc add dev eth0 root netem delay 0.1ms {jitter_value}ms distribution f1300 rate 1000mbit')
 ssh.close()
 
 print(f"Jitter script executed with delay: {jitter_value}ms")

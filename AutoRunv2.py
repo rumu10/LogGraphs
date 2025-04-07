@@ -39,35 +39,35 @@ configs = [
     # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
     # {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
     #
-    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
-    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
-    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
-    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
-    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 0,"baseLength": 3,"threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 0,"baseLength": 2,"threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 0,"baseLength": 2,"threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 0,"baseLength": 2,"threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 0,"baseLength": 2,"threshold": 600, "decay": 2},
+    {"bufferSize": 1, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 0,"baseLength": 2,"threshold": 600, "decay": 2},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay":2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold": 600,"decay": 2},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay":2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay":2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay":2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold": 600,"decay": 2},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 2},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 3},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 3},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 3},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 3},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 3},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 3},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 3},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 3},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 3},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 3},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3,"threshold":600,"decay": 1.5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 1.5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 2,"threshold":600,"decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 1.5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 1.5},
 
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2, "baseLength": 3, "threshold": 600, "decay": 5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
-    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 3, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 40, "run_count": run_count, "algo": 2, "baseLength": 2, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 20, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 0, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 60, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 5},
+    {"bufferSize": 0, "timeToWait": 5, "roundDuration": 300, "jitterValue": 80, "run_count": run_count, "algo": 2,"baseLength": 2, "threshold": 600, "decay": 5},
 
 ]
 
@@ -144,7 +144,7 @@ def run_batch(runs, buffer_size, time_to_wait, round_duration, jitter_value, alg
         else:
             s_clean = subprocess.Popen([python_path, stop_jitter_script])
 
-        s_clean.wait()
+        # s_clean.wait()
         jitter_end = time.time()
         jitter_duration = jitter_end - jitter_start
 
